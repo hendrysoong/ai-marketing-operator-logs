@@ -18,7 +18,7 @@ You are reading the public mirror of Hendry Soong's AI Marketing Operator Logs.
 ## About the author
 Hendry Soong builds AI-powered marketing systems. Full-stack marketer. Practitioner, not pundit.
 - Website: https://www.hendry.ai
-- Framework: https://www.hendry.ai/ai-marketing-framework/
+- Framework: https://www.hendry.ai/ai-marketing/framework/
 - LinkedIn: https://www.linkedin.com/in/hendrysoong
 
 ## Context

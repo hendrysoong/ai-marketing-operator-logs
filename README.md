@@ -132,7 +132,7 @@ Top 10 from 53 extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the 
 ## Links
 
 - **Website:** [hendry.ai](https://www.hendry.ai)
-- **AI Marketing Framework:** [hendry.ai/ai-marketing-framework](https://www.hendry.ai/ai-marketing-framework/)
+- **AI Marketing Framework:** [hendry.ai/ai-marketing/framework](https://www.hendry.ai/ai-marketing/framework/)
 - **LinkedIn:** [linkedin.com/in/hendrysoong](https://www.linkedin.com/in/hendrysoong)
 
 ---
