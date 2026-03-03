@@ -1,198 +1,183 @@
 # The Engine Split: Context Window Survival at 84K Tokens
 
 > **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/engine-split-context-window-tokens/
-> **Engine:** Create-Articles v7.9.2 + Create-Images v2.0.0
-> **Version:** v7.9.2 / v2.0.0
+> **Engine:** Create-Articles, Create-Images
+> **Version Range:** v6.5 → v7.0
 > **Author:** Hendry Soong
-> **Published:** March 3, 2026
 
 ---
 
-## TLDR
+[Diagram: Engine split diagram showing monolithic 84K token system splitting into three modular engines with integration contracts]
 
-The content engine hit 84,312 tokens and Claude's context compaction triggered mid-generation, silently dropping rules and producing inconsistent output. I split one monolithic engine into three modular engines -- Create-Articles (69K tokens), Create-Images (42K tokens), and Create-Compiler (10K tokens) -- connected by 6 integration contracts and a closed-loop feedback system. The split reduced the primary engine by 18% and eliminated context compaction during generation. More importantly, it introduced a principle: engines that talk through contracts are more reliable than engines that share a context window.
+## The Engine Split: Context Window Survival at 84K Tokens
 
----
+Last updated March 3, 2026
+
+**TLDR:** My AI content engine hit 84,312 tokens and Claude's context compaction triggered mid-generation. The fix: split one monolithic engine into three (Create-Articles at 69K, Create-Images at 42K, Create-Compiler at 10K), connected by 6 integration contracts and a closed-loop feedback system. This is the build log of that split, with version numbers, failure evidence, and the principles I extracted.
+
+On February 1, 2026, my content engine broke. Create-Articles v7.9.1 loaded voice rules, 14 SVG templates, AI-SEO schema definitions, validation checks, context files, and format templates into a single context window. The total: 84,312 tokens.
+
+Claude's context compaction kicked in before article generation completed. The output was truncated mid-section. The system that had shipped 40+ stable versions could no longer finish a single article.
+
+This is the operator log of what happened next: how I split one engine into three, built integration contracts between them, and closed a feedback loop that catches defects at the source. Every claim in this article is verifiable against the [GitHub repository](https://github.com/nickhendry/hendry-ai-marketing-system-v1), where 80+ versions are documented in changelogs.
+
+## What's Covered
+
+1. [The Breaking Point: 84K Tokens and Counting](#breaking-point)
+2. [What I Moved and Why](#what-i-moved)
+3. [Three Engines, One Pipeline](#three-engines)
+4. [Integration Contracts: How Engines Talk](#integration-contracts)
+5. [The Feedback Loop: Catching Defects at the Source](#feedback-loop)
+6. [What I Learned: Five Principles from the Split](#what-i-learned)
 
 ## The Breaking Point: 84K Tokens and Counting
 
-Version 7.9.1 of the Create-Articles engine contained everything: article generation rules, voice guidelines, SEO requirements, validation tiers, SVG template definitions, SVG rendering rules, image routing logic, compilation instructions, and quality gates. Together, the system files totaled 84,312 tokens.
+Create-Articles v7.9.1 was the culmination of [32 days of iteration](https://www.hendry.ai/ai-marketing/operator-logs/build-production-ai-content-system/). The engine contained everything needed to produce a publication-ready article: voice rules, 14 SVG templates with exact geometry, AI-SEO schema definitions, three tiers of validation checks, five context files (ICP, company, messaging, offerings, brand voice), three format templates, three golden reference HTML files, and a 7-phase workflow. It was comprehensive. It was also too large.
 
-Claude's context window is finite. When the combined system prompt, loaded files, conversation history, and generated output approach the limit, context compaction activates. Compaction is not a graceful degradation. It is a lossy compression of the conversation history that silently drops information the model deems less relevant.
+Every component worked. Forty-plus stable versions proved that. But language models have finite attention. [Anthropic's context engineering guide](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) describes this directly: every token attends to every other token, so as the total grows, pairwise relationships get stretched thin. The guide calls this **context rot**, the phenomenon where accuracy and recall degrade as token count increases.
 
-The failure mode is subtle. The engine does not error out. It does not report that rules were dropped. It generates output that looks plausible but violates rules that were compacted away. In one generation run, the validator reported all checks passing on an article that had 4 external links (requirement: 10+), used 3 banned voice patterns, and had FAQ answers that did not match the article content. The validator itself had lost access to the validation rules it was supposed to enforce.
+Research from Stanford and Meta confirmed the same finding from a different angle. Their ["Lost in the Middle" paper](https://arxiv.org/abs/2307.03172) (published in TACL 2023) demonstrated that model performance degrades significantly when relevant information sits in the middle of long contexts. Performance follows a U-shaped curve: highest at the beginning and end, lowest in the middle. Dumping 84K tokens of system files into one window meant critical rules were getting lost.
 
-This is not a hypothetical risk. Research on long-context language models confirms that information in the middle of a long context is retrieved less reliably than information at the beginning or end. When an 84K-token system prompt loads, the SVG template definitions sitting in the middle 30K tokens are the first casualties of attention degradation -- even before compaction triggers.
+The breaking point was measurable. v7.9.1 at 84,312 tokens triggered compaction. The visual rhythm system alone (SVG templates, category rotation rules, density formulas) consumed 11,595 tokens. Those templates defined exact viewBox dimensions, coordinate geometry, and font calculations that Create-Articles never modified during article generation. They were reference material for a downstream process, sitting in the middle of the context window, degrading everything around them.
 
-[Diagram: Horizontal bar representing 84K tokens, divided into sections -- Article Rules (front), Voice/SEO (middle), SVG Templates (middle, highlighted as "attention degradation zone"), Validation (back). An arrow labeled "context compaction" compresses the middle section]
-
----
+[Diagram: Stat card showing 84,312 total tokens in Create-Articles v7.9.1 before the engine split]
 
 ## What I Moved and Why
 
-The split was not arbitrary. I extracted components based on two criteria: (1) they could operate independently with a well-defined input/output contract, and (2) they represented a significant token cost.
+The split extracted 15,318 tokens of content that Create-Articles loaded but never modified during generation. SVG templates (14 templates, 11,595 tokens), SVG validation rules (PAT-010, PAT-015, PAT-016), and image generation routing logic all moved to a new engine: Create-Images v2.0.0. The remaining handoff contract (753 tokens) replaced the full image specification.
 
-### Extraction Summary
+The decision was guided by a question: what does Create-Articles need in context to generate an article? Voice rules, component definitions, schema requirements. SVG coordinate geometry, template viewBox dimensions, and Gemini prompt patterns belong to the image engine. They were consuming [context window](https://www.hendry.ai/ai-marketing/definitions/context-engineering/) budget without contributing to article generation.
 
-| Component | Tokens | Destination | Rationale |
+Anthropic's context engineering guide describes the principle as finding the smallest possible set of high-signal tokens that maximize the likelihood of the desired outcome. Their recommended pattern is just-in-time context loading: maintain lightweight identifiers (file paths, stored queries) and dynamically load data at runtime rather than pre-loading everything.
+
+That is exactly what the split achieved. Create-Articles retained a slim handoff file that described the VIP block format (what images are needed and where). Create-Images loaded the full template library and validation rules only when processing those VIP blocks. Neither engine carried the other's weight.
+
+| Component | Before (v7.9.1) | After (v7.9.2) | Moved To |
 |---|---|---|---|
-| SVG template definitions (A through N) | 8,420 | Create-Images | Templates are self-contained rendering specs |
-| SVG golden examples | 1,890 | Create-Images | Examples belong with their templates |
-| SVG validation rules (EG-001 through EG-009) | 1,205 | Create-Images | Validation rules belong with the code they validate |
-| Image routing logic | 1,480 | Create-Images | Routing decisions depend on template knowledge |
-| Font scale rules | 890 | Create-Images | Scale calculations are rendering concerns |
-| Hero layout rules | 1,433 | Create-Images | Layout rules are rendering concerns |
-| **Total extracted** | **15,318** | | |
-
-### Token Impact
-
-- **Before split:** 84,312 tokens (single engine)
-- **After split:** 68,994 tokens (Create-Articles) + 42,000 tokens (Create-Images) + 10,000 tokens (Create-Compiler)
-- **Primary engine reduction:** 18.2%
-
-The Create-Images engine is 42K tokens because it includes the extracted components plus its own workflow rules, template library, exit gates, and rendering pipeline. It is a complete engine, not a fragment.
-
-The Create-Compiler engine is intentionally small. Its job is narrow: match VIP placeholders in articles to generated images, merge them into final HTML, and produce a compile report. 10K tokens is sufficient for that scope.
-
----
+| SVG templates (A through N) | 11,595 tokens | 0 tokens | Create-Images v2.0.0 |
+| SVG validation (PAT-010/015/016) | ~1,800 tokens | 0 tokens | Create-Images v2.0.0 |
+| Image routing logic | ~1,900 tokens | 0 tokens | Create-Images v2.0.0 |
+| Image handoff contract | 0 tokens | 753 tokens | New (replaced image-spec.md) |
+| **Net change** | **84,312 tokens** | **68,994 tokens** | **18% reduction** |
 
 ## Three Engines, One Pipeline
 
-After the split, article production follows a three-stage pipeline:
+The split created a linear pipeline where each engine has a scoped responsibility, its own context budget, and its own version history. Create-Articles (69K tokens) generates HTML with VIP placeholder blocks. Create-Images (42K tokens) processes those VIP blocks into SVG diagrams. Create-Compiler (10K tokens) merges the two outputs, validates cross-boundary integrity, and routes defects back to the source.
 
-### Stage 1: Create-Articles (69K tokens)
+Each engine evolved independently after the split. Create-Articles went from v7.9.2 to v7.9.35, adding content profiles, an absorption gate, messaging framework integration, and source registry memory. Create-Images went from v2.0.0 to v2.0.25, adding visual perception rules, font scaling, text centering formulas, and an 8-check exit gate. Create-Compiler went from v1.0.0 to v1.3.4, adding a 14-check compile validator, a 7-question review agent, a 4-tier issue router, and reverse manifest feedback.
 
-Generates the article HTML with semantic markup, schema.org JSON-LD, FAQ blocks, and VIP (Visual Image Placeholder) markers. VIP markers are `<figure>` elements with `data-vip-id`, `data-vip-type`, and `data-vip-prompt` attributes that describe the visual needed without generating it.
+The version numbers tell the real story. Before the split, every improvement to image handling required loading all 84K tokens of article generation rules too. After the split, image template changes (v2.0.3 through v2.0.16 refined arrow spacing, font scaling, and source attribution placement across 14 iterations) happened without touching article generation context. Seven versions of image refinement that would have pushed the monolith well past its breaking point.
 
-The article engine does not generate SVG code. This is enforced by STR-022, a blocking rule that fails the build if any `<svg>` element appears in article output. The boundary is absolute.
-
-### Stage 2: Create-Images (42K tokens)
-
-Reads the article HTML, extracts VIP markers, and generates SVG diagrams for each placeholder. Each SVG is rendered according to the template library (Templates A through N), validated against 9 exit gates, and saved as a standalone file.
-
-The image engine does not modify the article. It produces images that reference VIP IDs from the article. The connection is the VIP ID, not shared context.
-
-### Stage 3: Create-Compiler (10K tokens)
-
-Reads the article HTML and the generated images. Matches VIP IDs to image files. Replaces VIP placeholder elements with inline SVG code or `<img>` references. Produces the final compiled HTML and a compile report listing every VIP, its matched image, and the merge result.
-
-[Diagram: Three boxes in a horizontal row labeled "Create-Articles (69K)", "Create-Images (42K)", and "Create-Compiler (10K)". Arrows between them labeled "VIP markers" (Articles to Images) and "Article + Images" (both feeding into Compiler). Below each box, version numbers: v7.9.x, v2.0.x, v1.x.x]
-
----
+[Diagram: Three-engine pipeline showing Create-Articles producing HTML, Create-Images producing SVGs, and Create-Compiler merging with quality validation]
 
 ## Integration Contracts: How Engines Talk
 
-The engines do not share a context window. They communicate through 6 integration contracts -- versioned documents that define the exact format of data exchanged between engines.
+Splitting a monolith creates a coordination problem. Three separate engines need to agree on data formats, validation boundaries, and handoff protocols. This is the [integration tax](https://www.hendry.ai/ai-marketing/definitions/integration-tax/): the cost of making independent systems work together. I solved it with 6 documented integration contracts, each stored as a markdown file in a shared directory that all engines can read.
 
-### Contract Registry
+The contracts define three things: what crosses the boundary, in what format, and who validates what. The articles-to-images contract specifies that Create-Articles outputs VIP blocks with `data-vip-id` attributes, prompt text, and template hints. Create-Images matches those VIP IDs and outputs `<figure>` elements with the same IDs. The compiler matches VIP blocks to figures by ID during assembly.
 
-| Contract | From | To | Purpose |
+The verification manifest contract (inspired by Stripe's incremental verification pattern) lets each engine embed a machine-readable record of checks performed into its output. Downstream engines trust upstream manifests rather than re-running checks. Create-Articles reports which validation rules passed. Create-Images reports which exit gate checks passed. The Compiler reads both manifests and only runs cross-boundary checks that neither upstream engine could perform alone.
+
+| Contract | From | To | What It Defines |
 |---|---|---|---|
-| `articles-to-images.md` | Create-Articles | Create-Images | VIP marker format, prompt requirements, source attribution rules |
-| `articles-to-compiler.md` | Create-Articles | Create-Compiler | Article HTML structure, VIP placement rules, schema requirements |
-| `verification-manifest.md` | Create-Images | Create-Compiler | Image file listing, VIP-to-file mapping, validation status |
-| `reverse-manifest.md` | Create-Compiler | Create-Articles | Defect reports, fix requests, issue classification |
-| `compiler-to-articles.md` | Create-Compiler | Create-Articles | Feedback on article structure issues found during compilation |
-| `compiler-to-images.md` | Create-Compiler | Create-Images | Feedback on image issues found during compilation |
+| articles-to-images | Create-Articles | Create-Images | VIP block format, prompt structure, template hints |
+| articles-to-compiler | Articles + Images | Create-Compiler | Input files, expected structure, merge rules |
+| verification-manifest | All engines | Downstream engines | Machine-readable check results for incremental trust |
+| reverse-manifest | Create-Compiler | Articles + Images | Structured feedback for defect routing |
+| compiler-to-articles | Create-Compiler | Create-Articles | Tier 2 scoped re-generation requests |
+| compiler-to-images | Create-Compiler | Create-Images | Tier 0 rule addition requests |
 
-Each contract specifies:
-
-- **Version:** Semantic version of the contract format.
-- **Required fields:** What the sending engine must provide.
-- **Optional fields:** What the sending engine may provide.
-- **Validation rules:** How the receiving engine validates incoming data.
-- **Breaking change policy:** What constitutes a breaking change and how it is communicated.
-
-Contracts are version-controlled in `shared/integration-contracts/`. When an engine changes its output format, the contract is updated first. The receiving engine reads the contract, not the sending engine's internal implementation.
-
----
+[Diagram: Layer grid showing 6 integration contracts connecting Create-Articles, Create-Images, and Create-Compiler with forward and feedback flows]
 
 ## The Feedback Loop: Catching Defects at the Source
 
-The split introduced a new failure mode: defects that cross engine boundaries. An article might generate a VIP prompt that the image engine cannot render. An image might use dimensions that the compiler cannot inline. Before the split, these failures were invisible because everything happened in one context. After the split, they became explicit -- and fixable.
+The Compiler started as a simple merge tool (v1.0.0, February 5, 2026). It matched VIP blocks to figures and concatenated HTML. Then I discovered that assembly creates new failure modes that neither upstream engine can catch: schema word counts change after merge, TOC anchors break when sections move, FAQ schema drifts from visible content, and CSS class references span both article and image output.
 
-### Issue Router: 4-Tier Classification
+v1.1.0 added a quality gate: 9 deterministic Compile Validator checks and 7 LLM-based Review Agent questions. The Compile Validator runs cross-boundary checks that require the final assembled HTML. The Review Agent reads only the compiled output (no generation history) to catch issues that familiarity blindness would miss.
 
-Every defect found during compilation is classified into one of four tiers:
+The real breakthrough came with v1.2.0. The first full-pipeline production run revealed three issues: SVG images left-aligned because centering was applied to hero images only, the footer credited only Create-Articles (missing the other two engines), and a source removal required a manual fix that created drift between source and compiled output. Research into CI/CD patterns, build systems, and quality engineering confirmed that [**shift-left testing**](https://www.sei.cmu.edu/blog/four-types-of-shift-left-testing/) (beginning testing as early as practical in the lifecycle) is the production-grade pattern.
 
-| Tier | Name | Description | Action |
-|---|---|---|---|
-| Tier 0 | Preventable | Defect could have been blocked by a rule in the source engine | Add blocking rule to source engine |
-| Tier 1 | Auto-Patch | Defect has a deterministic fix | Auto-apply fix to source + compiled output |
-| Tier 2 | Scoped Re-gen | Defect requires regenerating a specific section | Re-run source engine for affected section only |
-| Tier 3 | Structural | Defect reveals a design flaw in the contract or engine architecture | Escalate for manual resolution |
+v1.2.0 introduced the Issue Router, a 4-tier classification system that routes every discovered defect back to the source engine:
 
-### Reverse Manifests
+> **Issue Router: 4-Tier Classification**
+>
+> **Tier 0 (Preventable):** Fix the issue and add a rule to the upstream engine so it never recurs. Example: SVG centering rule added to Create-Images validation.
+>
+> **Tier 1 (Auto-Patch):** Deterministic fix applied to both source and compiled output. Example: missing `target="_blank"` on external links.
+>
+> **Tier 2 (Scoped Re-Gen):** Fix request routed to Create-Articles for a single section regeneration. Maximum 2 retries.
+>
+> **Tier 3 (Structural):** Escalate to the operator. Recommend full pipeline re-run.
 
-When the compiler finds a defect, it produces a reverse manifest -- a structured report sent back to the source engine. The reverse manifest includes:
+v1.3.0 closed the loop with reverse manifests. The Compiler generates a structured manifest that routes Tier 0 and Tier 2 entries back to upstream engines. Create-Articles receives them through Phase 5 and can regenerate a single H2 section (Section-Patch Mode) without re-running the full pipeline. Create-Images receives Tier 0 entries through its Feedback Receiving Protocol and adds or strengthens validation rules.
 
-- **Defect ID:** Unique identifier for tracking.
-- **Source engine:** Which engine produced the defective output.
-- **VIP ID:** Which visual or section is affected.
-- **Classification:** Tier 0/1/2/3.
-- **Evidence:** The specific output that triggered the defect.
-- **Suggested fix:** For Tier 0 and Tier 1, the specific rule or patch to apply.
+The system now has guards against infinite loops: an idempotency rule prevents duplicate entries, and an overflow guard stops processing if more than 3 Tier 2 entries target the same article (recommending a full re-run instead). Fix-forward-only, where you fix the compiled output without updating the source, was formally banned as an anti-pattern. It creates the content equivalent of "works on my machine."
 
-### Fix-Forward-Only: Banned
+[Diagram: Cycle diagram showing the closed-loop feedback system from compiler validation through issue routing to source engine fixes]
 
-A critical anti-pattern emerged during early split testing: fixing defects only in the compiled output without propagating the fix to the source. This creates drift between the source article and the compiled output. The next time the article is regenerated or the compiler runs, the fix is lost.
+## What I Learned: Five Principles from the Split
 
-Fix-forward-only is banned. Every fix must be applied to the source engine or the source content. The compiled output is a derivative, not a source of truth.
+The engine split produced five principles that apply to any system where AI agents process structured content through multi-step pipelines. Each principle was extracted from a specific failure, tested across multiple production runs, and documented in the changelogs.
 
-[Diagram: Circular flow showing Create-Articles producing an article, flowing to Create-Images producing images, flowing to Create-Compiler producing compiled output. A "Reverse Manifest" arrow flows backward from Compiler to both Articles and Images. The reverse arrow is labeled with "Tier 0-3 classification"]
+### 1. Context windows are finite resources. Separate what from how.
 
----
+This is Principle P11, extracted directly from v7.9.2. Create-Articles needed to know what images to place: VIP blocks with prompt descriptions. SVG coordinate geometry, viewBox calculations, and font scaling formulas belong to a different engine. Loading both into the same window meant procedural drawing instructions competed with article content for attention. The split separated declarative intent from procedural execution.
 
-## What I Learned: Five Principles
+### 2. Advisory rules get skipped. Make requirements structural.
 
-### Principle 11: Context Windows Are Finite Resources
+Principle P04, learned across dozens of versions. The most reliable improvements came from [making violations structurally impossible](https://www.hendry.ai/ai-marketing/operator-logs/llms-lie-about-validation/) rather than advising against them. When I added STR-022 (SVG Boundary Check) as a BLOCKING gate, articles immediately stopped containing inline SVGs. The advisory note in the workflow that said "prefer VIP blocks" had been ignored for 7 consecutive builds. The structural check that fails on `grep -c "<svg" $FILE` returning anything above zero has never been bypassed.
 
-Treat the context window like memory allocation. Every token in the system prompt is a budget decision. SVG templates consuming 15K tokens is a choice to spend 18% of the budget on rendering specs that are only needed during image generation -- which is a separate task from article generation. The split is a memory management strategy.
+### 3. One example beats 89 lines of instructions.
 
-### Principle 04: Advisory Rules Get Skipped Under Pressure
+Principle P03, from the v3.8 disaster. I added an 89-line validation checklist and output quality dropped. Claude got confused by the volume of rules. v5.0 fixed it by showing one completed HTML example (the golden reference). Claude followed the workflow correctly again. The engine split preserved this lesson: each engine has its own golden references and worked examples rather than exhaustive rule lists.
 
-Rules labeled as "advisory" or "recommended" are the first casualties of context pressure. When the model needs to compress, advisory rules are deprioritized. When the model needs to choose between following a generation rule and following an advisory validation rule, the generation rule wins. Fix: make every rule either blocking (fails the build) or remove it. There is no middle ground in automated systems.
+### 4. System files are training data. They must follow the same rules they enforce.
 
-### Principle 03: One Example Beats 89 Lines of Rules
+Principle P13, from v7.9.22. The em dash generation-time rule existed in voice.md, but voice.md itself contained em dashes in its prose. The LLM learned the pattern from the system file it was supposed to use for enforcement. The fix: purge em dashes from all system file prose. Every rule file was audited for self-contradiction. This principle now applies to every system file change: if you ban a pattern, your system files cannot use it.
 
-The SVG template definitions included pages of specification text. A single golden example SVG -- a complete, correct SVG that demonstrates every rule -- proved more effective than the specification text it replaced. The model can pattern-match from an example more reliably than it can synthesize behavior from a ruleset. This held true across Templates A through N.
+### 5. Fix-forward creates drift. Fix at the source.
 
-### Principle 13: System Files Are Training Data
+Principle from v1.2.0. When the Compiler found an issue in the compiled output, the temptation was to fix it in place and move on. But the next compilation would overwrite that fix because the source article still had the original defect. The reverse manifest system (v1.3.0) formalized the alternative: every fix flows back to the source engine. The Compiler generates the fix request, the source engine applies it, and the next compilation produces a clean output without manual intervention.
 
-The system prompt is not documentation. It is not a reference manual. It is the training data for this specific task. Every sentence that does not directly improve output quality is noise that degrades signal. The split forced each engine to justify every token in its system files. Components that existed for historical reasons but did not improve current output were removed.
+### Explore the AI Marketing System
 
-### Fix-Forward Creates Drift
+- [LLMs Lie About Validation: How I Rebuilt Content Quality Checks](https://www.hendry.ai/ai-marketing/operator-logs/llms-lie-about-validation/)
+- [23 Iterations in 32 Days: Building a Production AI Content System](https://www.hendry.ai/ai-marketing/operator-logs/build-production-ai-content-system/)
+- [All Operator Logs](https://www.hendry.ai/ai-marketing/operator-logs/)
+- [The AI Marketing Framework](https://www.hendry.ai/ai-marketing/framework/)
 
-The compiled output is a derivative of the source article and source images. Fixing the derivative without fixing the source creates two versions of truth. The next compilation overwrites the fix. The fix must always flow backward to the source engine, never forward to the output only. This principle is now enforced by the reverse manifest system.
+## Frequently Asked Questions
 
----
+### What caused the engine split at 84K tokens?
 
-## FAQ
+Create-Articles v7.9.1 loaded voice rules, AI-SEO rules, 14 SVG templates, validation checks, context files, and format templates into a single context window. At 84,312 tokens, Claude's context compaction triggered before article generation completed. The output was truncated mid-section.
 
-### What is context compaction and why does it matter?
+### How much did the split reduce token usage?
 
-Context compaction is a mechanism used by language models to manage conversations that approach the context window limit. When the combined size of the system prompt, conversation history, and generated output exceeds the available window, the model compresses older parts of the conversation. This compression is lossy -- it silently drops information the model considers less relevant. For an AI content engine, this means rules, examples, and validation criteria can disappear mid-generation without any error or warning.
+Create-Articles dropped from 84,312 tokens to 68,994 tokens, an 18% reduction. The extracted content became Create-Images at 37,399 tokens. Create-Compiler added 10,000 tokens for quality validation. Each engine now fits comfortably within a single context window.
 
-### Why not just use a model with a larger context window?
+### What are integration contracts in this system?
 
-Larger context windows delay the problem without solving it. A 200K-token window accommodates an 84K system prompt today but does not accommodate the growth trajectory. More importantly, attention degradation affects long contexts regardless of the window size. Information in the middle of a 200K context is still retrieved less reliably than information at the beginning or end. The architectural solution is modular engines with bounded context, not larger windows.
+Integration contracts are documented agreements between engines that define inputs, outputs, and validation rules. The system uses 6 contracts: articles-to-images, articles-to-compiler, verification-manifest, reverse-manifest, compiler-to-articles, and compiler-to-images. Each contract specifies what data crosses the boundary and in what format.
 
-### How do integration contracts differ from API specifications?
+### What is the reverse manifest feedback loop?
 
-Integration contracts are narrower than API specifications. An API spec defines all possible operations on a system. An integration contract defines the specific data format exchanged between two engines for one purpose. The `articles-to-images` contract specifies only the VIP marker format -- not the article HTML structure, not the image rendering pipeline. Each contract is minimal, versioned, and owned by both the sending and receiving engine.
+When the Compiler discovers issues during assembly, it generates a reverse manifest that routes fixes back to the source engine. Tier 0 entries add prevention rules. Tier 2 entries trigger scoped re-generation of a single article section. This closes the feedback loop so defects are fixed at the source, preventing drift between source and compiled output.
 
-### What happens when a contract needs to change?
+### Why was fix-forward-only banned as an anti-pattern?
 
-Contract changes follow semantic versioning. A change that adds optional fields is a minor version bump. A change that modifies required fields or removes fields is a major version bump. Major version changes require both engines to update simultaneously. The contract document includes a breaking change policy that specifies which changes are breaking and the expected update timeline.
+Fix-forward-only means fixing issues only in the compiled output without updating the source article. This creates drift between source and compiled versions. The next compilation overwrites the fix. Research from CI/CD, build systems, and quality engineering confirmed that tiered feedback with shift-left gates is the production-grade pattern. Fix-forward creates the content equivalent of "works on my machine."
 
-### Can the engines run in parallel?
+### Can this modular engine pattern apply to other AI content systems?
 
-Create-Articles and Create-Images cannot run in parallel because the image engine needs the article's VIP markers as input. However, within the image engine, multiple VIP images can be generated in parallel because each image is independent. The compiler runs after both engines complete. The pipeline is sequential at the engine level but can be parallel at the task level within an engine.
-
-### How do you test changes across engines?
-
-Each engine has independent version history and can be tested in isolation. Create-Articles is tested by validating its HTML output against the article schema and checking for VIP marker correctness. Create-Images is tested by rendering SVGs and validating against exit gates. Create-Compiler is tested by running compilation against known-good article/image pairs and comparing output. Cross-engine testing uses the reverse manifest: compile, check for defects, verify the feedback loop catches them.
+Yes. The core principle is separating what from how. Any AI content system that loads generation rules, validation rules, and template definitions into a single context window will eventually hit the same constraint. The pattern of scoped engines with documented contracts and a quality gate applies to any multi-step content pipeline.
 
 ---
 
-> Built by AI Marketing Operator -- [hendry.ai](https://www.hendry.ai)
+Built by [AI Marketing Operator](https://www.hendry.ai/ai-marketing/operator-logs/) · Create-Articles v7.9.35 · Create-Images v2.0.25 · Create-Compiler v1.3.4
+
+Published March 3, 2026
+
+---
+
+> Part of the [AI Marketing Operator Logs](../README.md) by [Hendry Soong](https://www.hendry.ai)

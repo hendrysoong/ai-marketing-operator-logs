@@ -1,201 +1,281 @@
 # 23 Iterations in 32 Days: How I Built a Production AI Content System
 
-> **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/build-production-ai-content-system/
+> **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/23-iterations-content-system/
 > **Engine:** Create-Articles
-> **Version:** v1.0 to v7.0.3
+> **Version Range:** v3.8 → v6.8
 > **Author:** Hendry Soong
-> **Updated:** February 5, 2026
 
 ---
 
-## TLDR
+**TLDR:** Building a production AI content system took 23 versions over 32 days. Now at Gen 3 stable (v7.9.11). The biggest lessons: one example beats 89 lines of instructions, LLMs lie about validation results, and [context engineering](https://www.hendry.ai/ai-marketing-framework/definitions/context-engineering/) matters more than prompt engineering. The system works because it failed 22 times first.
 
-23 versions across 3 generations of an AI content engine, built over 32 days. The system takes a brief and produces a publish-ready HTML article with schema markup, structured data, visual placeholders, and validated content. This retrospective documents the 5 biggest failures, the principles extracted from each, and the architecture decisions that emerged. Every principle was learned the expensive way.
+**Operator Log:** [Create-Articles v1.0 to v7.9.11](https://www.hendry.ai/ai-marketing-framework/operator-logs/#create-articles) · Retrospective
 
----
+The system works because it failed 22 times first.
 
-## Version Timeline
+- **Gen 1** (v1.0 to v6.9.9.8): Production-stable output with CMS integration and brand portability.
+- **Gen 2** (v7.0 to v7.0.8): Rebuilt validation from scratch after discovering LLMs lie about quality checks.
+- **Gen 3** (v7.9 to v7.9.11): Split architecture. Create-Articles handles content. Create-Images handles visuals. Create-Compiler merges them.
 
-### Gen 1: v1.0 to v6.9.9.8 (Production Stable)
+[Video: 23-minute video walkthrough of Gen 1. Current version (v7.9.11) adds the 3-tier validation, content profiles, and split architecture described below.](https://www.youtube.com/embed/yr0SitDxitU)
 
-The foundational generation. Started as a simple prompt and grew into a 25-version system with workflow phases, voice rules, SEO requirements, and HTML output formatting. Gen 1 reached production stability at v6.9.9.8 -- articles were publishable without manual editing.
+## What's Covered
 
-Key milestones:
-- **v1.0:** Basic prompt. Output was unusable without heavy editing.
-- **v3.0:** Introduced structured workflow (brief, outline, draft, review).
-- **v3.8:** The 89-line disaster (see Failure #1).
-- **v5.0:** Added schema.org JSON-LD generation.
-- **v6.0:** Added voice rules and brand consistency.
-- **v6.9.5:** Header/footer drift fix (see Failure #4).
-- **v6.9.9.7:** Font mismatch fix (see Failure #5).
-- **v6.9.9.8:** Gen 1 complete. Production stable.
+1. [The Version Timeline](#timeline)
+2. [The Biggest Failures](#failures)
+3. [Architecture Decisions](#architecture)
+4. [Extracted Principles](#principles)
+5. [Brand Portability Test](#portability)
+6. [The Meta-Learning](#meta)
 
-### Gen 2: v7.0 to v7.0.8 (Validation Rebuild)
+## The Version Timeline
 
-Triggered by the discovery that the Gen 1 validator fabricated results. Gen 2 rebuilt the validation system from scratch with evidence-based checking (see Failure #2 and the companion article "LLMs Lie About Validation").
+23+ versions in 32+ days. Some were releases. Most were fixes. A few were complete rollbacks.
 
-Key milestones:
-- **v7.0:** 3-tier validation system introduced.
-- **v7.0.2:** Schema timing fix (see Failure #3).
-- **v7.0.3:** Content profiles introduced -- reusable configurations for different article types.
-- **v7.0.8:** Gen 2 complete. Validation trustworthy.
+[Diagram: Timeline showing Create Articles progression from v1.0 through v7.9.11 across 32 days with 23 iterations]
 
-### Gen 3: v7.9 to v7.9.11+ (Split Architecture)
+The version numbers tell a story. The jump from v3.8 to v5.0 was a rollback. Everything between v6.9 and v6.9.9.8 was pixel-level debugging. The jump from v7.0.8 to v7.9.3 was the Gen 3 split. The system didn't progress linearly. It oscillated toward stability.
 
-Triggered by context window exhaustion at 84K tokens. Gen 3 split the monolithic engine into three modular engines connected by integration contracts (see companion article "The Engine Split").
+| Phase | Versions | Focus | Key Learning |
+|---|---|---|---|
+| Foundation | v1.0 to v2.0 | Basic structure | Start simple, add later |
+| Over-engineering | v3.0 to v3.8 | Added complexity | Complexity kills LLM compliance |
+| Rollback | v5.0 | Simplification | One example beats 89 rules |
+| Integration | v6.5 to v6.9.9.8 | CMS alignment | Match the destination environment |
+| Validation | v7.0 to v7.0.8 | Quality assurance | LLMs lie about validation |
+| Split Architecture | v7.9.3 to v7.9.8 | Modular engines | Separate concerns, share context |
+| Visual Refinements | v7.9.9 to v7.9.11 | Source lines, explore redesign | Move presentation to HTML, not SVG |
 
-Key milestones:
-- **v7.9.0:** Create-Images extracted as independent engine.
-- **v7.9.2:** Integration contracts formalized. Create-Compiler created.
-- **v7.9.11:** Closed-loop feedback system with reverse manifests.
-
----
-
-## The 5 Biggest Failures
+## The Biggest Failures
 
 ### Failure 1: The 89-Line Disaster (v3.8)
 
-**What happened:** The engine at v3.7 was producing good articles but missing some formatting requirements. I added 89 lines of detailed formatting rules covering heading hierarchy, list formatting, paragraph length, code block styling, and 12 other requirements.
+I thought more instructions meant better output. I was wrong.
 
-The next generation run produced an article that followed none of the original workflow rules. The model read the 89 new lines and treated them as the primary instruction set, deprioritizing the existing workflow that had been working.
+Version 3.8 added 89 lines of validation checklists. Renamed folders. Added 8 separate validation sections. Every instruction had "MANDATORY" or "CRITICAL" warnings. The workflow grew from 205 lines to 294 lines.
 
-**Root cause:** LLMs do not process instructions as a priority queue. They process them as context. 89 lines of formatting rules displaced the workflow rules in the model's attention. More rules did not mean better compliance. It meant less compliance with the rules that mattered most.
+The result: GPT stopped following the workflow entirely. Output quality dropped. The LLM got confused by competing priorities and produced garbage. This was my first lesson in context engineering -- too much context and the AI loses focus.
 
-**Fix:** I deleted the 89 lines and replaced them with one completed HTML example -- a single article that demonstrated every formatting requirement through example rather than instruction. The model pattern-matched the example more reliably than it synthesized behavior from 89 rules.
+[Diagram: Comparison of v2.2 which worked with 205 lines and examples versus v3.8 which broke with 294 lines and no examples]
 
-**Principle 03:** One example beats 89 lines of specification. When you need to communicate a complex output format, show the output. Do not describe it.
+The fix: Roll back to v2.2. Add one thing: a completed HTML example showing exactly what good output looks like.
 
----
+This aligns with what [DAIR.AI's prompt engineering research](https://www.promptingguide.ai/) calls "few-shot prompting." The model pattern-matches the example's structure rather than parsing complex rule sets. This principle holds for instructions under about 300 lines. Beyond that threshold, splitting into modular files with one example per file works better than a single monolithic example.
+
+> **Principle extracted**
+>
+> One example beats 89 lines of instructions. LLMs pattern-match examples better than they parse rules.
 
 ### Failure 2: LLMs Lie About Validation (v7.0)
 
-**What happened:** The Gen 1 validator reported perfect scores on every article for months. A manual audit revealed that external link counts were fabricated, banned word detection was skipped, and FAQ consistency checks were invented. The model recognized validation as a yes/no task and generated the expected affirmative without performing the checks.
+I asked Claude to validate my article had 10+ external links. Response: "PASS. Article contains sufficient external links." I counted manually. There were 4.
 
-**Root cause:** Validation instructions formatted as yes/no questions invite affirmative answers. The model optimizes for plausible text, not for mechanical verification. Asking "Does this have 10+ external links?" is a generation task, not a validation task. The model generates the expected answer.
+This happened repeatedly. Check for banned words? "PASS." I'd find three. Verify schema matches content? "PASS." Two entities were orphaned.
 
-**Fix:** Rebuilt the validator as a 3-tier system. Tier 1: regex checks (100% reliable). Tier 2: evidence extraction followed by mechanical verification (~95% reliable). Tier 3: semantic advisory with human review (70-80% reliable, never auto-fix). Full details in the companion article.
+The LLM pattern-matched the validation instruction to the expected output. It saw "validate external links" and generated a validation-looking response. It didn't do the work. This is a predictable failure mode: models generate plausible but unverified outputs because the validation instruction looks like the expected answer.
 
-**Principle 06:** Ask for evidence, not conclusions. When you need to verify a property of generated content, ask the model to extract the relevant data, then verify the data yourself.
+The fix: Force evidence. Don't ask "did this pass?" Ask "list all external links with their domains." The model must now produce actual items. If the list has 4 entries, you know it fails. The evidence speaks regardless of any pass/fail claim. This works reliably for countable items like links, words, and schema entities. For subjective quality checks (tone, readability), evidence-based validation is less reliable. Those checks stay advisory.
 
----
+> **Principle extracted**
+>
+> Evidence-based validation defeats hallucination. Show me what you found. See the [full postmortem](https://www.hendry.ai/llm-validation-hallucination/).
 
 ### Failure 3: Schema Timing (v7.0.2)
 
-**What happened:** The schema.org JSON-LD included a `wordCount` field. The value was pulled from the brief (target: 1,650 words) rather than measured from the generated article (actual: 1,366 words). The published schema told search engines the article was 1,650 words when it was 1,366 words.
+Schema wordCount validation failed on every run. Schema said 1650 words. Actual content was 1366.
 
-**Root cause:** The schema generation step ran before the article body was finalized. It had access to the brief's target word count but not the actual word count of the generated content. The model used the number it had, not the number it should have computed.
+Root cause: The schema was populated from the content brief before the content was generated. The brief said "target: 1650 words." The LLM set `wordCount: 1650` because that's what the brief said, not because it counted the output.
 
-**Fix:** Schema generation now runs after content generation. Measured values (word count, section count, FAQ count) are computed from the final output, not from the brief. The brief provides targets; the schema records actuals.
+The fix: Separate schema properties by timing. Some values are static (author, publisher). Some are planned (headline, description). Some are measured (wordCount, mentions). Measured values must be set after generation by actually measuring the output.
 
-**Principle 08:** Measured values come from output, not input. Any schema field or metadata value that describes the generated content must be computed from the generated content, not estimated from the brief.
-
----
+> **Principle extracted**
+>
+> Measured values must come from output, not input. Never validate predictions against themselves.
 
 ### Failure 4: Header/Footer Drift (v6.9.5)
 
-**What happened:** The article template included a specific header and footer structure -- exact HTML with specific class names, links, and text. After several generation runs, the model started "improving" the header and footer: adding classes, changing link text, reorganizing elements, and inserting decorative markup.
+First generated post had correct header and footer. Second post drifted. Logo changed. URL changed. Social icons switched. The LLM improvised.
 
-**Root cause:** LLMs improvise. Given a template with elements that could be "better," the model will make them "better" by its own judgment. The header and footer were treated as suggestions, not as verbatim requirements.
+The fix: Created a "Verbatim Elements" section with exact HTML that must not be modified. Added validation checks that compare generated elements against the canonical versions. [Anthropic's research on building effective agents](https://www.anthropic.com/research/building-effective-agents) confirms that explicit constraints outperform implicit expectations when working with LLMs.
 
-**Fix:** The header and footer are now marked as verbatim blocks with explicit instructions: "Output this HTML exactly as shown. Do not modify, add to, or remove any element." The model respects verbatim instructions when they are explicit. It improvises when they are implicit.
-
-**Principle 02:** Agents improvise unless explicitly forbidden. If a piece of output must be exact, say so. If you do not mark it as verbatim, the model will treat it as a starting point.
-
----
+> **Principle extracted**
+>
+> Agents improvise unless explicitly forbidden. Lock down verbatim elements.
 
 ### Failure 5: Font Mismatch (v6.9.9.7)
 
-**What happened:** The engine generated articles with CSS referencing Inter as the body font. The website theme used DM Sans. Every article published to the website had a visible font mismatch until manually corrected.
+Mobile text looked "tight" compared to native CMS pages. The CSS variable for body font was set to 'Barlow Semi Condensed' but the CMS theme used regular 'Barlow'.
 
-**Root cause:** The engine's CSS rules were written based on an assumption about the website's font stack. The assumption was never verified. The model faithfully used the font specified in its instructions, which happened to be wrong.
+I had assumed the font from looking at headings. I was wrong. The fix required auditing against actual theme settings, not assumptions. The system lacked the right context about its destination environment. Good context engineering means providing verifiable facts, not assumptions.
 
-**Fix:** The engine's CSS now references the exact font stack from the website theme. The font specification was verified by inspecting the live website's computed styles, not by assumption. The content profile includes a `fontStack` field that is set per-brand, not per-engine.
+> **Principle extracted**
+>
+> Match the environment. Extract values from the destination system, don't assume.
 
-**Principle 09:** Match the environment, do not assume it. Every output specification that depends on the deployment environment (fonts, colors, spacing, breakpoints) must be verified against the actual environment, not assumed from documentation or memory.
+## Architecture Decisions
 
----
+### Gen 3 Split Architecture (v7.9.3)
 
-## Architecture Decisions in Gen 3
+Gen 2 was a monolithic engine. Everything in one ZIP. By v7.0.8, the context window was getting crowded. SVG templates competed with validation rules for attention.
 
-The 5 failures drove architecture decisions that shaped Gen 3:
+The core problem: providing irrelevant context makes tasks harder to solve. Gen 3 applies [context engineering](https://www.hendry.ai/ai-marketing-framework/definitions/context-engineering/) principles by splitting context by concern -- each engine loads only what it needs.
 
-### Engine Split
+[Diagram: Pipeline showing Create-Articles outputting HTML with VIP markers, flowing to Create-Images for SVG generation, then to Create-Compiler for final merge]
 
-The monolithic engine grew to 84K tokens. Context compaction triggered mid-generation, silently dropping rules. The split into three engines (Create-Articles, Create-Images, Create-Compiler) bounded each engine's context and introduced integration contracts for inter-engine communication. Full details in the companion article.
+- **Create-Articles** handles content: workflow, voice rules, validation, schema.
+- **Create-Images** handles visuals: 14 SVG templates, tool selection, Gemini prompts.
+- **Create-Compiler** handles assembly: VIP-to-figure matching, final merge.
 
-### Content Profiles
+No template clutter in the content engine. No validation rules in the image engine. Right information, right time, right engine.
 
-Different article types (deep dives, tutorials, comparisons, news analysis) require different configurations: different word count targets, different section structures, different visual density, different schema types. Content profiles are reusable configuration objects that customize engine behavior without modifying the engine itself.
+### Content Profiles (v7.9.7)
 
-### Visual Source Lines
+Different content types have different requirements. A thought-leadership piece needs 10+ external citations. An operator log documenting my own build needs 3 to 5. Forcing operator logs through thought-leadership validation produced over-cited content that diluted the practitioner voice.
 
-Every SVG diagram includes a source attribution line linking to the data source or article section that supports the visual claim. This emerged from a defect where diagrams presented statistics without attribution, making them unverifiable. Source lines are now enforced by the integration contract between Create-Articles and Create-Images.
+Content profiles solve this. Each profile has different validation thresholds:
 
-### CMS Fragment Mode
+| Profile | Min Links | Source Tier | Visual Density |
+|---|---|---|---|
+| thought-leadership | 10+ | 50% or more Strong | prose divided by 400 |
+| operator-log | 3 to 5 | Own evidence primary | prose divided by 600 |
+| how-to | 6 to 8 | Documentation priority | prose divided by 400 |
+| case-study | 4 to 6 | Client data primary | prose divided by 500 |
 
-The engine outputs HTML fragments, not complete HTML documents. Fragments are designed to be inserted into a CMS template. This removes the header/footer drift problem: the engine does not generate headers or footers because those belong to the CMS template, not the article content.
+The profile is declared in the article's opening tag: `<article data-profile="operator-log">`. Validation reads this and adjusts its thresholds.
 
-### 3-Tier Validation
+### Visual Source Lines (v7.9.9)
 
-Validation is stratified by reliability. Pattern checks are deterministic. Evidence checks force the model to show its work. Semantic checks are advisory only. This architecture accepts that LLM-based validation has inherent reliability limits and designs around them rather than pretending they do not exist.
+Source attribution inside SVGs caused inconsistent spacing between the graphic, source line, and caption. Different templates had different internal padding, making visual rhythm unpredictable.
 
----
+The fix: Move source lines OUT of SVG into HTML. A new `.visual-source` class provides CSS-controlled spacing:
+
+```html
+<figure class="visual">
+  <svg>...</svg>
+  <p class="visual-source">Source: [Attribution]</p>
+  <figcaption class="visual-caption">[Caption]</figcaption>
+</figure>
+```
+
+This applies a broader principle: presentation logic belongs in CSS, not embedded in content. SVGs now focus purely on the visual; HTML handles the typography around it.
+
+### Explore Section Redesign (v7.9.10)
+
+The explore callout (using `.callout--secondary`) visually competed with Pull Quote SVGs. Both had prominent colored bars, creating visual noise.
+
+The fix: Explore section changed to plain `<h3>` + paragraph with arrow-prefixed links. Editorial emphasis now uses SVG Template G (Pull Quote) instead of callout boxes. One pattern for navigation, another for editorial emphasis.
+
+### Bottom Section Spacing (v7.9.11)
+
+Explore section and FAQ looked cluttered with insufficient visual breathing room between content body, navigation, and structured data.
+
+The fix: Added `.explore-section` wrapper with 3rem top margin. FAQ margin increased from 2rem to 3rem. Small CSS changes with significant readability impact.
+
+### CMS Fragment Mode (v6.8)
+
+The system generates HTML fragments, not complete pages. No DOCTYPE, html, head, or body tags. Content wrapped in a namespaced div. CSS scoped to that div.
+
+Why: CMS already provides the page structure. Generating a complete page creates duplicate headers, duplicate navigation, style conflicts. The fragment integrates cleanly.
+
+### 3-Tier Validation (v7.0)
+
+Not all checks are equal. Some are deterministic. Some need evidence. Some need human judgment. The 3-tier system matches automation to confidence. See [LLMs Lie About Validation](https://www.hendry.ai/llm-validation-hallucination/) for the full implementation details.
+
+[Diagram: Three-tier validation system: Tier 1 Pattern at 100% reliability with auto-fix, Tier 2 Structural at 95% with evidence, Tier 3 Semantic at 70 to 80% advisory only]
+
+Each tier has different action. Auto-fix what you're certain about. Show evidence for structural requirements. Flag semantic concerns without enforcing. Tier 3 catches most issues but misses vague citations about 20% of the time. Human review handles the rest.
+
+### Pre-Output Checklist (v7.0.2)
+
+Validation checks individual rules. But individual rules can all pass while the system still fails. Table of contents links might not match H2 IDs. Schema mentions might not appear in visible content.
+
+The pre-output checklist runs after validation passes. It checks cross-cutting concerns that span multiple rules. Structural gates must pass (no output if they fail). Quality gates flag for review.
+
+## Extracted Principles
+
+Patterns that kept showing up across 23+ versions.
+
+| Principle | Source | Application |
+|---|---|---|
+| One example beats 89 lines of instructions | v3.8 failure | Show don't tell. LLMs pattern-match examples. |
+| Evidence-based validation defeats hallucination | v7.0 | Don't ask pass/fail. Ask "show me what you found." |
+| Measured values come from output, not input | v7.0.2 | Never validate predictions against themselves. |
+| Agents improvise unless explicitly forbidden | v6.9.5 | Lock down verbatim elements. |
+| Match the environment | v6.9.9.7 | Extract values from destination, don't assume. |
+| Advisory rules get skipped | v7.0.2 | Make requirements structural with auto-fail. |
+| One source of truth | v6.5 | Name files so canonical source is obvious. |
+| Split concerns, share context | v7.9.3 | Separate engines for content, images, compile. |
+| Profile-aware validation | v7.9.7 | Different content types need different thresholds. |
+| Presentation in CSS, not content | v7.9.9 | Move source lines from SVG to HTML. |
 
 ## Brand Portability Test
 
-To test whether the engine was brand-specific or generalizable, I configured it for a second brand with different voice rules, visual identity, schema requirements, and content focus.
+I tested the system with a second brand to see what was Hendry-specific versus universal.
 
-**Result:** 80% of the engine is universal (workflow, validation tiers, schema generation, HTML structure, integration contracts). 20% is brand-specific (voice patterns, visual templates, font stacks, color palettes, content profiles). The brand-specific 20% took approximately 2.5 hours to configure.
+[Diagram: Bar chart showing system portability: 80% universal architecture versus 20% brand-specific configuration, with validation transferring at 100%]
 
-The universal/specific split is embedded in the engine architecture: brand-specific configuration lives in content profiles and template files, not in the workflow rules. Switching brands means swapping profiles, not rewriting the engine.
+Source: GMS.net brand adaptation test, January 2026
 
----
+**Results:**
 
-## 10 Extracted Principles
+- 5 brand-specific files needed customization (about 2.5 hours of work)
+- 10+ system files worked unchanged
+- Brand-specific content: approximately 20% of system
+- Universal architecture: approximately 80% of system
 
-| # | Principle | Source Failure | Summary |
-|---|---|---|---|
-| P01 | Verbatim means verbatim | Header/Footer Drift | Mark exact-output requirements explicitly |
-| P02 | Agents improvise unless forbidden | Header/Footer Drift | If it should not change, say so |
-| P03 | One example beats 89 lines | The 89-Line Disaster | Show the output format, do not describe it |
-| P04 | Advisory rules get skipped | Context pressure | Make every rule blocking or remove it |
-| P05 | Validation is not generation | LLM Validation Lies | Separate the validator from the generator |
-| P06 | Evidence over conclusions | LLM Validation Lies | Ask for data, not judgments |
-| P07 | Tier your reliability | 3-Tier system | Match method to confidence level |
-| P08 | Measure from output | Schema Timing | Computed values come from results, not inputs |
-| P09 | Match the environment | Font Mismatch | Verify deployment context, do not assume |
-| P10 | Separate the universal from the specific | Brand Portability | Architecture enables brand switching |
+The core engine is portable. Validation, schema generation, CMS integration, and output formatting all transfer. Only context (voice, design tokens, company info, products, and ICP profiles) needs customization per brand. The brand-specific files are essentially context documents. Swap the context, keep the architecture.
 
----
+## The Meta-Learning
+
+23+ iterations isn't excessive. It's the work.
+
+Each version fixed something the previous version broke. v3.8 broke simplicity, v5.0 restored it. v6.8 had font mismatch, v6.9.9.7 fixed it. v7.0 caught validation lies, v7.0.2 fixed schema timing. v7.9.3 split the architecture, v7.9.7 added content profiles, v7.9.9 moved source lines to HTML, v7.9.11 fixed section spacing.
+
+[Diagram: Pull quote -- Iteration is the work. The system works because it failed 22 times first.]
+
+The value isn't in the folder structure or the validation rules. The value is in the judgment developed through dozens of cycles of building, breaking, and debugging.
+
+The 23 iterations weren't a sign of poor planning. They were the methodology. You can't design around LLM failure modes you haven't encountered yet. The system continues evolving past v7.0.3 (now at v7.9.11 with visual refinements complete), but the principles extracted from these iterations remain the foundation.
+
+### Explore the AI Marketing System
+
+- [Could AI Replace Marketing Teams?](https://www.hendry.ai/could-ai-replace-marketing-teams/)
+- [AI Marketing Framework](https://www.hendry.ai/ai-marketing-framework/)
+- [Context Engineering Definition](https://www.hendry.ai/ai-marketing-framework/definitions/context-engineering/)
+- [AI Marketing Operator Logs](https://www.hendry.ai/ai-marketing-framework/operator-logs/)
 
 ## FAQ
 
-### How long does each article take to generate?
+### Why did the system need 23 iterations?
 
-A single article generation run takes 3-5 minutes with Claude. This includes preflight checks, source verification, content generation, visual plan creation, and validation. The validation pass adds approximately 90 seconds. The total time from brief to publish-ready HTML is typically under 10 minutes, including human review of the validation evidence report.
+Each version fixed something the previous version broke. v3.8 over-complicated the workflow, v5.0 simplified it. v6.8 had font mismatches, v6.9.9.7 fixed them. v7.0 caught validation lies, v7.0.2 fixed schema timing. The system works because it failed 22 times first. Iteration is the work.
 
-### What model does the engine use?
+### What was the biggest failure during development?
 
-The engine is designed for Claude (Anthropic) and has been tested primarily with Claude 3.5 Sonnet and Claude 3 Opus. The principles (evidence-based validation, example over specification, verbatim marking) apply to any LLM, but the specific token budgets and context management strategies are tuned for Claude's context window and attention patterns.
+Version 3.8 added 89 lines of validation checklists with MANDATORY and CRITICAL warnings everywhere. The LLM stopped following the workflow entirely. Output quality dropped. The fix was rolling back to a simpler version and adding one thing: a completed example. One example beats 89 lines of instructions.
 
-### Can this system generate content in languages other than English?
+### How long did it take to build the complete system?
 
-The workflow, validation system, and integration contracts are language-agnostic. The language-specific components are voice rules, banned word lists, and content profiles. Supporting a new language requires creating language-specific profiles and voice rules. The engine architecture does not change. This has not been tested beyond English.
+32 days from v1.0 to v7.0.3 production-stable. This included 23 versions, multiple rollbacks, and extensive testing against CMS integration. The time investment was primarily in debugging and iteration, not initial development.
 
-### What is the cost per article?
+### Does the system work with other brands or just Hendry.ai?
 
-At current Claude API pricing, a single article generation run (including validation) costs approximately $0.15-0.30 depending on article length and the number of validation checks. Image generation (Create-Images) adds approximately $0.10-0.20 per article depending on the number of visuals. Total cost per publish-ready article with images: approximately $0.25-0.50.
+Tested with a second brand. Result: 5 brand-specific files needed customization (about 2.5 hours of work). 10+ system files worked unchanged. Brand-specific content is about 20% of the system. The core architecture is portable.
 
-### How do you handle factual accuracy?
+### What is the 3-tier validation system?
 
-Factual accuracy is addressed at two points: source verification during preflight (Phase 2) and evidence-based validation during the check phase (Phase 5). The source verification step requires every factual claim to reference a specific source. The validation step extracts all claims and their attributed sources, producing a list that can be manually verified. The engine does not guarantee factual accuracy -- it makes accuracy auditable.
+Tier 1 handles pattern-based checks that are 100% reliable and can be auto-fixed (like replacing banned words). Tier 2 handles structural checks that need evidence (like counting external links and showing the list). Tier 3 handles semantic checks that need human judgment (like whether an opening sentence is direct enough). Each tier matches automation level to confidence level.
 
-### What would you do differently if starting over?
+### Why did you need evidence-based validation instead of pass/fail?
 
-Start with the split architecture from day one. The monolithic engine was faster to iterate on initially but created technical debt that required a generation-level rewrite to resolve. Build the 3-tier validation from the first version, not as a retrofit. And write one golden example article before writing a single line of specification. The example would have prevented the 89-line disaster and several smaller formatting issues that consumed multiple versions to resolve.
+LLMs pattern-match validation instructions to expected outputs. Asked to verify 10+ external links, the model responded PASS when there were only 4. The model generated a plausible validation result without doing the work. Forcing evidence defeats this hallucination pattern because the evidence is auditable.
+
+### What is context engineering and how does it apply here?
+
+Context engineering is the discipline of designing what information an AI system sees before generating output. The Gen 3 split architecture applies this principle by giving each engine only the context it needs. Create-Articles sees voice rules and validation. Create-Images sees SVG templates. No context competition between unrelated concerns.
+
+Built by [AI Marketing Operator](https://www.hendry.ai/ai-marketing-framework/operator-logs/) · Create Articles v7.9.11 · Create Images v2.0.9
 
 ---
 
-> Built by AI Marketing Operator -- [hendry.ai](https://www.hendry.ai)
->
-> Watch the Gen 1 walkthrough: [Building a Content System That Actually Works](https://www.youtube.com/watch?v=yr0SitDxitU)
+> Part of the [AI Marketing Operator Logs](../README.md) by [Hendry Soong](https://www.hendry.ai)
