@@ -3,7 +3,49 @@
 > Part of the [AI Marketing Operator Logs](../README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-Content generation engine with 3-tier validation (Pattern, Structural, Semantic). 40+ versions across three generations.
+Content generation engine with 3-tier validation (Pattern, Structural, Semantic). 50+ versions across three generations.
+
+---
+
+## v8.0.1 — Headless Native: Legacy CMS to Headless CMS JSON
+
+**Date:** 5 to 6 April 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Migrated output format from HTML fragments (legacy CMS) to structured JSON (headless CMS). Validation rules were coupled to content, not markup — all checks survived the format change. JSON is now primary output; HTML preview is human-review only.
+
+**Principle:** Changing the output format tests whether your validation rules are coupled to structure or to quality. Ours survived because they check content, not markup.
+
+**Tags:** Gen 3, Create-Articles, Architecture, Headless
+
+---
+
+## v7.9.36 — PAT-019: Experience-Counting Pattern
+
+**Date:** 8 to 10 March 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+LLMs quantify personal experience to signal authority ("five times," "after the third collapse"). The count is the tell — real operators describe what happened, not how many times. PAT-019 added as Tier 3 flag-for-review. Exception: counting artifacts/data is fine. Q18 added to QUICK-CHECK. voice.md updated to v7.0.9.
+
+**Principle:** LLMs quantify experience to signal authority. The count itself is the tell — real operators describe what happened, not how many times.
+
+**Tags:** Gen 3, Create-Articles, Voice, Validation
+
+---
+
+## v7.9.33 to v7.9.35 — Domain Frequency + Voice Sync + Rule Health Check
+
+**Date:** 23 February to 2 March 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Domain Frequency (v7.9.33): CV-015 compile check for source domain over-reliance. Voice Sync (v7.9.34): voice.md and AI-SEO rules aligned after spec verification incident. Rule Health Check (v7.9.35): cross-engine pipeline version sync, 21 stale refs updated.
+
+**Principle:** Production compiles are the real test suite for upstream engines. Every compile run reveals gaps the generator missed.
+
+**Tags:** Gen 3, Create-Articles, Validation, Voice
 
 ---
 

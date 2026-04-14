@@ -12,7 +12,7 @@ Raw documentation of building AI marketing systems and engines. By Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 110+ versions across 6 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 150+ versions across 6 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
@@ -22,9 +22,9 @@ The system uses context engineering as its core discipline: designing the inform
 
 | Engine | Purpose | Versions | Status |
 |---|---|---|---|
-| Create-Articles | Content generation with 3-tier validation | 40+ | Production (v7.9.35) |
-| Create-Images | SVG diagrams and hero images with 10 perception rules and 8-check exit gate | 25 | Production (v2.0.25) |
-| Create-Compiler | Article assembly with 14-check validator, review agent, and closed-loop feedback | 7+ | Production (v1.3.4) |
+| Create-Articles | Content generation with 3-tier validation | 50+ | Production (v8.0.1) |
+| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | 30+ | Production (v4.1.0) |
+| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | 10+ | Production (v2.0.1) |
 | Listen-Competitors | Competitive intelligence with synthesis | 7 | Production (v3.3) |
 | Create-Social | LinkedIn carousel generation | 3 | Production (v1.0.2) |
 | Create-Articles-Replicate | Portable content engine tested on 3 brands | 48+ | Production |
@@ -34,7 +34,7 @@ The system uses context engineering as its core discipline: designing the inform
 
 ## The Pipeline
 
-Articles flow through three engines: **Create-Articles** generates HTML with visual insertion points (0 SVGs). **Create-Images** generates SVG diagrams and hero images through an 8-check exit gate. **Create-Compiler** merges them, runs a 14-check compile validator plus a 7-question review agent, classifies issues through a 4-tier router, and sends reverse manifests back to upstream engines. Closed-loop feedback. Each engine has its own context window, validation system, and version history.
+Articles flow through three engines: **Create-Articles** generates structured JSON with visual insertion points (0 SVGs). **Create-Images** generates SVG diagrams and hero images through a 9-check exit gate. **Create-Compiler** validates fields with 22 checks plus a 7-question review agent, classifies issues through a 4-tier router, and sends reverse manifests back to upstream engines. Output publishes to a headless CMS (Neon + Payload + Vercel) via publishing SDK. Closed-loop feedback. Each engine has its own context window, validation system, and version history.
 
 ---
 
@@ -44,20 +44,20 @@ Articles flow through three engines: **Create-Articles** generates HTML with vis
 ai-marketing-operator-logs/
 ├── README.md                         This file
 ├── LICENSE                           CC BY 4.0
-├── PRINCIPLES.md                     53 principles, standalone citable doc
+├── PRINCIPLES.md                     75 principles, standalone citable doc
 ├── SYSTEM-STATUS.md                  Current engine versions, live reference
 ├── .ai/
 │   └── CLAUDE.md                     Agent routing — shows orchestration pattern
 ├── assets/
 │   └── hero.svg                      Timeline visualization from blog
 ├── system-architecture/
-│   └── CHANGELOG.md                  5 entries
+│   └── CHANGELOG.md                  18 entries
 ├── create-articles/
-│   └── CHANGELOG.md                  43 entries incl. foundation v0.1–v0.3
+│   └── CHANGELOG.md                  46 entries incl. foundation v0.1–v0.3
 ├── create-images/
-│   └── CHANGELOG.md                  9 entries
+│   └── CHANGELOG.md                  13 entries
 ├── create-compiler/
-│   └── CHANGELOG.md                  4 entries
+│   └── CHANGELOG.md                  6 entries
 ├── create-social/
 │   └── CHANGELOG.md                  1 entry
 ├── listen-competitors/
@@ -114,7 +114,7 @@ Full retrospectives on major learnings. Each deep dive expands on log entries wi
 
 ## Key Principles
 
-Top 10 from 53 extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the full table.
+Top 10 from 75 extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the full table.
 
 1. The agent is disposable. The orchestration layer is permanent.
 2. The LLM generates numbers. The human sees shapes.

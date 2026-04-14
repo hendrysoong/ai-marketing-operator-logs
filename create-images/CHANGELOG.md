@@ -3,7 +3,63 @@
 > Part of the [AI Marketing Operator Logs](../README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-SVG diagram and hero image generation with visual perception rules and an exit gate validation system.
+SVG diagram and hero image generation with visual perception rules and an exit gate validation system. 30+ versions across three generations.
+
+---
+
+## v4.1.0 — 760px-Proof Hero: Primitive Library + Render-Width Tuning
+
+**Date:** 8 April 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Hero SVGs rendered at 760px (0.633x viewBox) were too small to read. Tuned all minimums for actual render width: titles ≥38px, headings ≥26px, body ≥22px, absolute min 18px. Built primitive library (P1–P8): Content Box, Schema Card, Document Icon, Flow Arrow, Browser Frame, Database Cylinder, Stat Callout, Dashed Connection.
+
+**Principle:** Design for the render width, not the viewBox. 1200px SVGs that render at 760px need their minimums tuned for 0.633x.
+
+**Tags:** Gen 3, Create-Images, Hero, Typography
+
+---
+
+## v4.0.0 — SVG-Only: Two Visual Systems + Programmatic Generator
+
+**Date:** 7 to 8 April 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Removed tool routing entirely. One tool, two modes (hero and inline), zero routing logic. Added programmatic generator for data-heavy visuals. Decision fatigue eliminated — the agent picks mode, not tool.
+
+**Principle:** Removing tool routing didn't remove capability — it removed decision fatigue. One tool, two modes, zero routing logic.
+
+**Tags:** Gen 3, Create-Images, Architecture, Simplification
+
+---
+
+## v3.0.1 — Headless Native: VIP Blocks to CMS Fields
+
+**Date:** 5 April 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Migrated output format from VIP block HTML to headless CMS field structure. Generation rules unchanged — format wrapper updated only. I/O format changed, generation rules didn't.
+
+**Principle:** When the I/O format changes but the generation rules don't, you know the rules were well-abstracted.
+
+**Tags:** Gen 3, Create-Images, Architecture, Headless
+
+---
+
+## v2.0.26 — Arithmetic-Proof Generation
+
+**Date:** 3 March 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Mandatory SVG comments before every text block and every arrow, showing arithmetic before placement. EG-009 added: exit gate checks arrow breathing arithmetic. 9 checks total. Proportional spacing formula replaces fixed table. Text centering now recalculates from formula on every render.
+
+**Principle:** Force the agent to show its math. Arithmetic comments before placement catch errors that visual inspection misses.
+
+**Tags:** Gen 3, Create-Images, Architecture, Exit Gate
 
 ---
 

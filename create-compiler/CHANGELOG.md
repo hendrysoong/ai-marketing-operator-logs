@@ -3,7 +3,35 @@
 > Part of the [AI Marketing Operator Logs](../README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-Article assembly pipeline with compile validator, review agent, and closed-loop feedback system.
+Article assembly pipeline with compile validator, review agent, and closed-loop feedback system. 10+ versions across three generations.
+
+---
+
+## v2.0.1 — Validator, Not Assembler: 22 Field-Based Checks
+
+**Date:** 5 April 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+CMS handles assembly now — the compiler validates fields, not HTML page structure. 22 field-based checks replacing the old HTML assembler system. Responsibility split: CMS assembles, compiler checks.
+
+**Principle:** Moving from assembler to validator simplified the engine by removing an entire responsibility. The CMS handles assembly now — the compiler just checks the result.
+
+**Tags:** Gen 3, Create-Compiler, Architecture, Headless
+
+---
+
+## v1.3.3 to v1.3.4 — Rule Health Check + Boundary Alignment
+
+**Date:** 2 March 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Rule Health Check (v1.3.3): CV-016 added — intentional redundancy check confirms compile validator catches what generation-time rules miss. Compile validator at 14 checks. Boundary Alignment (v1.3.4): cross-engine pipeline version sync, handoff contract verified.
+
+**Principle:** Intentional redundancy is a feature: checking the same rule at generation and compile is a safety net, not duplication.
+
+**Tags:** Gen 3, Create-Compiler, Validation, Architecture
 
 ---
 

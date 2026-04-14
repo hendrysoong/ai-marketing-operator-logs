@@ -3,7 +3,7 @@
 > Part of the [AI Marketing Operator Logs](README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-Patterns that keep showing up. Extracted from 110+ logged versions across all engines.
+Patterns that keep showing up. Extracted from 150+ logged versions across all engines.
 
 ---
 
@@ -79,6 +79,28 @@ Patterns that keep showing up. Extracted from 110+ logged versions across all en
 | 51 | Contracts between engines need explicit, machine-enforceable rules. | Create-Images v2.0.25 |
 | 52 | Memory is infrastructure. Without it, the system cannot learn from its own history. | Create-Compiler v1.3.2 |
 | 53 | Version propagation across engines is the most common drift vector. | System Architecture (March 2026) |
+| 54 | Production compiles are the real test suite for upstream engines. Every compile run reveals gaps the generator missed. | Create-Articles v7.9.33 |
+| 55 | LLMs quantify experience to signal authority. The count itself is the tell — real operators describe what happened, not how many times. | Create-Articles v7.9.36 |
+| 56 | Changing the output format tests whether your validation rules are coupled to structure or to quality. Ours survived because they check content, not markup. | Create-Articles v8.0.1 |
+| 57 | Force the agent to show its math. Arithmetic comments before placement catch errors that visual inspection misses. | Create-Images v2.0.26 |
+| 58 | When the I/O format changes but the generation rules don't, you know the rules were well-abstracted. | Create-Images v3.0.1 |
+| 59 | Removing tool routing didn't remove capability — it removed decision fatigue. One tool, two modes, zero routing logic. | Create-Images v4.0.0 |
+| 60 | Design for the render width, not the viewBox. 1200px SVGs that render at 760px need their minimums tuned for 0.633x. | Create-Images v4.1.0 |
+| 61 | Intentional redundancy is a feature: checking the same rule at generation and compile is a safety net, not duplication. | Create-Compiler v1.3.3 |
+| 62 | Moving from assembler to validator simplified the engine by removing an entire responsibility. The CMS handles assembly now — the compiler just checks the result. | Create-Compiler v2.0.1 |
+| 63 | Version bumps are cross-engine operations. Grep all repos after every bump, not just the changed engine. | System Architecture |
+| 64 | Shared context files need one canonical location. Per-engine copies drift with every version bump. | System Architecture |
+| 65 | Centralise context once. When the same file lives in 3 engines, it diverges in 3 directions. | System Architecture |
+| 66 | Migrate real content early. Speculative schema design misses every edge case that actual articles expose. | System Architecture |
+| 67 | Article templates needed 3 iterations because each was driven by migrating real content, not by speculative design. | System Architecture |
+| 68 | Launch preparation is a compression event — it surfaces every issue the development phase deferred. | System Architecture |
+| 69 | Automated security review finds real issues but can't assess business risk. The operator's job is triage. | System Architecture |
+| 70 | Moving to headless didn't just change the output format. It changed what each engine is responsible for. | System Architecture |
+| 71 | Document the pipeline before automating it. Cross-repo flows need a single spec both sides can reference. | System Architecture |
+| 72 | The first automated pipeline run reveals every assumption the manual process hid. Ship the pipeline, then fix what it exposes. | System Architecture |
+| 73 | Time-to-live depends on content complexity, not stack complexity. | System Architecture |
+| 74 | Conversation history is not version control. When three chat windows carry the system state, every session starts with a manual sync that drifts silently. | System Architecture |
+| 75 | The first engine built on new infrastructure validates the infrastructure more than itself. | System Architecture |
 
 ---
 
