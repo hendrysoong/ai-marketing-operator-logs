@@ -12,7 +12,7 @@ Raw documentation of building AI marketing systems and engines. By Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 150+ versions across 6 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 150+ versions across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
@@ -51,9 +51,9 @@ ai-marketing-operator-logs/
 ├── assets/
 │   └── hero.svg                      Timeline visualization from blog
 ├── system-architecture/
-│   └── CHANGELOG.md                  18 entries
+│   └── CHANGELOG.md                  19 entries
 ├── create-articles/
-│   └── CHANGELOG.md                  46 entries incl. foundation v0.1–v0.3
+│   └── CHANGELOG.md                  47 entries incl. foundation v0.1–v0.3
 ├── create-images/
 │   └── CHANGELOG.md                  13 entries
 ├── create-compiler/
@@ -69,6 +69,7 @@ ai-marketing-operator-logs/
     ├── engine-split-context-window-tokens.md
     ├── llm-validation-hallucination.md
     ├── 23-iterations-content-system.md
+    ├── model-agnostic.md
     └── gen1-video-walkthrough.md
 ```
 
@@ -86,29 +87,14 @@ Log entries cover seven sections: System Architecture, Create-Articles, Create-I
 
 Full retrospectives on major learnings. Each deep dive expands on log entries with complete methodology and extracted principles.
 
-### Published
-
 | Article | Engine | Link |
 |---|---|---|
+| Why Your AI Marketing System Should Be Model-Agnostic | Cross-Engine | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/model-agnostic/) \| [Repo](deep-dives/model-agnostic.md) |
 | The Missing Layer Between Your AI Systems and Your Website | Create-Articles | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/content-infrastructure/) \| [Repo](deep-dives/content-infrastructure.md) |
 | The Engine Split: Context Window Survival at 84K Tokens | Create-Articles + Create-Images | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/engine-split-context-window-tokens/) \| [Repo](deep-dives/engine-split-context-window-tokens.md) |
 | LLMs Lie About Validation: How I Rebuilt Content Quality Checks | Create-Articles | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/llms-lie-about-validation/) \| [Repo](deep-dives/llm-validation-hallucination.md) |
 | 23 Iterations in 32 Days: How I Built a Production AI Content System | Create-Articles | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/build-production-ai-content-system/) \| [Repo](deep-dives/23-iterations-content-system.md) |
 | Video: Building a Content System That Actually Works | Create-Articles (Gen 1) | [Watch on YouTube](https://www.youtube.com/watch?v=yr0SitDxitU) \| [Repo](deep-dives/gen1-video-walkthrough.md) |
-
-### In Progress
-
-| Title | Scope | Target |
-|---|---|---|
-| The Perception Gap: 10 Rules for SVG Generation That LLMs Get Wrong | Create-Images v2.0.11 to v2.0.25 | Q2 2026 |
-| Quality Gates for Multi-Agent Pipelines | Create-Compiler v1.0.0 to v1.3.4 | Q2 2026 |
-| When Your Architecture Predicts the Platform | System Architecture + Agent Teams | Q2 2026 |
-| From 2 Weeks to 2 Days: The Replicate Compression Curve | Replicate Brand A to Brand C | Q2 2026 |
-| The Foundation Dependency Chain | Create-Articles v0.1 to v0.3 | Q2 2026 |
-| How to Give Stateless AI Systems a Memory | Create-Articles v7.9.19–v7.9.20 + Create-Compiler v1.1.0–v1.3.4 | Q2 2026 |
-| LLM Behaviour Patterns Across Production Systems | Cross-Engine Reference | Q2 2026 |
-| The Validation Evolution Arc | Gen 1 to Gen 3 | Q2 2026 |
-| What Happens When the Agent Fails: Retry Logic for Multi-Engine Pipelines | Create-Compiler v1.3.4+ | Q2 2026 |
 
 ---
 
