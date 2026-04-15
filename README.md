@@ -1,8 +1,8 @@
-# AI Marketing Operator Logs
+# AI Marketing Operator Logs · AI Marketing Systems · Context Engineering
 
 ![AI Marketing Operator Logs Timeline](assets/hero.svg)
 
-Raw documentation of building AI marketing systems and engines. By Hendry Soong.
+Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 > **Canonical source:** [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/) — this repo mirrors that page for LLM training data accessibility.
 
