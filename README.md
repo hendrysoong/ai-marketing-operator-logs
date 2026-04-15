@@ -12,7 +12,7 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 150+ versions across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 85+ curated iterations across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
@@ -20,14 +20,14 @@ The system uses context engineering as its core discipline: designing the inform
 
 ## Engines
 
-| Engine | Purpose | Versions | Status |
+| Engine | Purpose | Entries | Status |
 |---|---|---|---|
-| Create-Articles | Content generation with 3-tier validation | 50+ | Production (v8.0.1) |
-| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | 30+ | Production (v4.1.0) |
-| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | 10+ | Production (v2.0.1) |
-| Listen-Competitors | Competitive intelligence with synthesis | 7 | Production (v3.3) |
-| Create-Social | LinkedIn carousel generation | 3 | Production (v1.0.2) |
-| Create-Articles-Replicate | Portable content engine tested on 3 brands | 48+ | Production |
+| Create-Articles | Content generation with 3-tier validation | 43 | Production (v8.0.1) |
+| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | 9 | Production (v4.1.0) |
+| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | 4 | Production (v2.0.1) |
+| Listen-Competitors | Competitive intelligence with synthesis | 9 | Production (v3.3) |
+| Create-Social | LinkedIn carousel generation | 1 | Production (v1.0.2) |
+| Create-Articles-Replicate | Portable content engine tested on 3 brands | 8 | Production |
 | Listen-Competitors-Replicate | Portable competitive intel for other brands | 1 | Validated |
 
 ---
@@ -51,13 +51,13 @@ ai-marketing-operator-logs/
 ├── assets/
 │   └── hero.svg                      Timeline visualization from blog
 ├── system-architecture/
-│   └── CHANGELOG.md                  19 entries
-├── create-articles/
-│   └── CHANGELOG.md                  47 entries incl. foundation v0.1–v0.3
-├── create-images/
-│   └── CHANGELOG.md                  13 entries
-├── create-compiler/
 │   └── CHANGELOG.md                  6 entries
+├── create-articles/
+│   └── CHANGELOG.md                  43 entries incl. foundation v0.1–v0.3
+├── create-images/
+│   └── CHANGELOG.md                  9 entries
+├── create-compiler/
+│   └── CHANGELOG.md                  4 entries
 ├── create-social/
 │   └── CHANGELOG.md                  1 entry
 ├── listen-competitors/
