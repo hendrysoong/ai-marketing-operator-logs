@@ -17,5 +17,5 @@
 
 - **Orchestration:** GitHub-based with CLAUDE.md routing
 - **Pipeline:** Create-Articles → Create-Images → Create-Compiler → Headless CMS (Neon + Payload + Vercel)
-- **Total curated iterations:** 85+ (87 operator log entries across 7 engines)
+- **Total curated iterations:** 105+ (109 operator log entries across 7 engines)
 - **Extracted principles:** 75+
