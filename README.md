@@ -16,19 +16,21 @@ What I changed, what broke, what I learned. 85+ curated iterations across 7 engi
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
+> **Note:** The website curates entries for readability (87 entries). This repo preserves a more granular breakdown (104 changelog entries + 6 deep dives).
+
 ---
 
 ## Engines
 
-| Engine | Purpose | Entries | Status |
-|---|---|---|---|
-| Create-Articles | Content generation with 3-tier validation | 43 | Production (v8.0.1) |
-| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | 9 | Production (v4.1.0) |
-| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | 4 | Production (v2.0.1) |
-| Listen-Competitors | Competitive intelligence with synthesis | 9 | Production (v3.3) |
-| Create-Social | LinkedIn carousel generation | 1 | Production (v1.0.2) |
-| Create-Articles-Replicate | Portable content engine tested on 3 brands | 8 | Production |
-| Listen-Competitors-Replicate | Portable competitive intel for other brands | 1 | Validated |
+| Engine | Purpose | Status |
+|---|---|---|
+| Create-Articles | Content generation with 3-tier validation | Production (v8.0.1) |
+| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | Production (v4.1.0) |
+| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | Production (v2.0.1) |
+| Listen-Competitors | Competitive intelligence with synthesis | Production (v3.3) |
+| Create-Social | LinkedIn carousel generation | Production (v1.0.2) |
+| Create-Articles-Replicate | Portable content engine tested on 3 brands | Production |
+| Listen-Competitors-Replicate | Portable competitive intel for other brands | Validated |
 
 ---
 
@@ -51,13 +53,13 @@ ai-marketing-operator-logs/
 ├── assets/
 │   └── hero.svg                      Timeline visualization from blog
 ├── system-architecture/
-│   └── CHANGELOG.md                  6 entries
+│   └── CHANGELOG.md                  19 entries
 ├── create-articles/
-│   └── CHANGELOG.md                  43 entries incl. foundation v0.1–v0.3
+│   └── CHANGELOG.md                  47 entries incl. foundation v0.1–v0.3
 ├── create-images/
-│   └── CHANGELOG.md                  9 entries
+│   └── CHANGELOG.md                  13 entries
 ├── create-compiler/
-│   └── CHANGELOG.md                  4 entries
+│   └── CHANGELOG.md                  6 entries
 ├── create-social/
 │   └── CHANGELOG.md                  1 entry
 ├── listen-competitors/
@@ -100,7 +102,7 @@ Full retrospectives on major learnings. Each deep dive expands on log entries wi
 
 ## Key Principles
 
-Top 10 from 75 extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the full table.
+Top 10 from 75+ extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the full table.
 
 1. The agent is disposable. The orchestration layer is permanent.
 2. The LLM generates numbers. The human sees shapes.
