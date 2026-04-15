@@ -12,11 +12,11 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 85+ curated iterations across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 105+ curated iterations across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
-> **Note:** The website curates entries for readability (87 entries). This repo preserves a more granular breakdown (104 changelog entries + 6 deep dives).
+> **Note:** The website curates entries for readability (109 entries). This repo preserves a more granular breakdown (104 changelog entries + 6 deep dives).
 
 ---
 
