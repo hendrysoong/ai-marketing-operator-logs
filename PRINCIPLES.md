@@ -3,7 +3,7 @@
 > Part of the [AI Marketing Operator Logs](README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-Patterns that keep showing up. Extracted from 150+ logged versions across all engines.
+Patterns that keep showing up. Extracted from 105+ curated iterations across all engines.
 
 ---
 
@@ -13,12 +13,12 @@ Patterns that keep showing up. Extracted from 150+ logged versions across all en
 2. The LLM generates numbers. The human sees shapes.
 3. Evidence-based validation defeats hallucination.
 4. Agents improvise unless explicitly forbidden.
-5. Context window is a finite resource. Separate what from how.
+5. Context engineering is not prompt engineering. It's designing the information layer.
 6. One example beats 89 lines of instructions.
-7. Validation-as-data. Review logs let the system prune its own rules with evidence.
+7. Context window is a finite resource. Separate what from how.
 8. The problems come first, then the principles, then the product.
 9. Cross-session memory turns isolated agents into a learning system.
-10. Version propagation across engines is the most common drift vector.
+10. Memory is infrastructure. Without it, the system cannot learn from its own history.
 
 ---
 
