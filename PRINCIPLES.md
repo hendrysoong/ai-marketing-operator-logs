@@ -3,7 +3,7 @@
 > Part of the [AI Marketing Operator Logs](README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-Patterns that keep showing up. Extracted from 105+ curated iterations across all engines.
+Patterns that keep showing up. Extracted from 115+ curated iterations across all engines.
 
 ---
 
@@ -101,6 +101,12 @@ Patterns that keep showing up. Extracted from 105+ curated iterations across all
 | 73 | Time-to-live depends on content complexity, not stack complexity. | System Architecture |
 | 74 | Conversation history is not version control. When three chat windows carry the system state, every session starts with a manual sync that drifts silently. | System Architecture |
 | 75 | The first engine built on new infrastructure validates the infrastructure more than itself. | System Architecture |
+| 76 | Verify the rendered artifact, not the generator self-report. | System Architecture |
+| 77 | Curation beats capture. The artifacts are the product. | System Architecture |
+| 78 | Ban absolute certainties. One counter-example discredits an absolute. | Create-Articles v8.0 |
+| 79 | Adopt the shape, do not re-document it. Reconcile, do not blind-adopt. | System Architecture |
+| 80 | Observed policy beats stated policy. Read the git history. | System Architecture |
+| 81 | Numbers are human-typed, never agent-transcribed. | System Architecture |
 
 ---
 

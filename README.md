@@ -12,11 +12,11 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 105+ curated iterations across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 115+ curated iterations across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
-> **Note:** The website curates entries for readability (109 entries). This repo preserves a more granular breakdown (104 changelog entries + 6 deep dives).
+> **Note:** The website curates entries for readability (116 entries). This repo preserves a more granular breakdown (104 changelog entries + 6 deep dives); the latest batch (6 entries + a 7th deep dive) is mirrored to the live site first and lands here on the next content-mirror pass.
 
 ---
 
@@ -46,7 +46,7 @@ Articles flow through three engines: **Create-Articles** generates structured JS
 ai-marketing-operator-logs/
 ├── README.md                         This file
 ├── LICENSE                           CC BY 4.0
-├── PRINCIPLES.md                     75 principles, standalone citable doc
+├── PRINCIPLES.md                     81 principles, standalone citable doc
 ├── SYSTEM-STATUS.md                  Current engine versions, live reference
 ├── .ai/
 │   └── CLAUDE.md                     Agent routing — shows orchestration pattern
@@ -102,7 +102,7 @@ Full retrospectives on major learnings. Each deep dive expands on log entries wi
 
 ## Key Principles
 
-Top 10 from 75+ extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the full table.
+Top 10 from 81 extracted principles. See [PRINCIPLES.md](PRINCIPLES.md) for the full table.
 
 1. The agent is disposable. The orchestration layer is permanent.
 2. The LLM generates numbers. The human sees shapes.
