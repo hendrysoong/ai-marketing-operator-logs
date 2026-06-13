@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" style="width: 100%; height: auto;" role="img" aria-label="Iteration paths across seven AI marketing engines converging toward production, showing 105+ curated iterations across three generations">
-<rect width="1200" height="675" fill="#120704"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" style="width: 100%; height: auto;" role="img" aria-label="Iteration paths across ten AI marketing engines converging toward production, showing 115+ curated iterations across three generations, with three planned engines">
+<rect width="1200" height="780" fill="#120704"/>
 <text x="140" y="28" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="16" font-weight="600" fill="#D4633A" opacity="0.5">GEN 1</text>
 <text x="420" y="28" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="16" font-weight="600" fill="#4A8CC7" opacity="0.5">GEN 2</text>
 <text x="880" y="28" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="16" font-weight="600" fill="#7F77DD" opacity="0.5">GEN 3</text>
@@ -46,13 +46,22 @@
 <text x="950" y="454" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">6 entries</text>
 <text x="580" y="484" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="600" fill="#8A807A">Create-Social</text>
 <text x="580" y="504" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">1 entry</text>
+<circle cx="80" cy="555" r="5" fill="none" stroke="#E8E4E1" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.35"/>
+<text x="100" y="559" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="600" fill="#E8E4E1" opacity="0.35">Listen-Account</text>
+<text x="275" y="559" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.3">planned</text>
+<circle cx="80" cy="595" r="5" fill="none" stroke="#E8E4E1" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.35"/>
+<text x="100" y="599" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="600" fill="#E8E4E1" opacity="0.35">Signal-Account</text>
+<text x="275" y="599" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.3">planned</text>
+<circle cx="80" cy="635" r="5" fill="none" stroke="#E8E4E1" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.35"/>
+<text x="100" y="639" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="600" fill="#E8E4E1" opacity="0.35">Data-Engine</text>
+<text x="255" y="639" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.3">planned</text>
 <text x="40" y="103" font-family="Barlow Semi Condensed, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.4">v0.1</text>
 <text x="40" y="243" font-family="Barlow Semi Condensed, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.4">v1.0</text>
 <text x="40" y="363" font-family="Barlow Semi Condensed, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.4">v3.0</text>
-<text x="140" y="570" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">FOUNDATION</text>
-<text x="420" y="570" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">ITERATION</text>
-<text x="700" y="570" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">VALIDATION</text>
-<text x="980" y="570" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">PRODUCTION</text>
-<text x="600" y="660" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="500" fill="#E8E4E1" opacity="0.4">105+ CURATED ITERATIONS ACROSS 7 ENGINES</text>
-<text x="1185" y="672" text-anchor="end" font-family="Barlow Semi Condensed, sans-serif" font-size="11" fill="#E8E4E1" opacity="0.4">hendry.ai</text>
+<text x="140" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">FOUNDATION</text>
+<text x="420" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">ITERATION</text>
+<text x="700" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">VALIDATION</text>
+<text x="980" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">PRODUCTION</text>
+<text x="600" y="755" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="500" fill="#E8E4E1" opacity="0.4">115+ CURATED ITERATIONS ACROSS 10 ENGINES (3 PLANNED)</text>
+<text x="1185" y="775" text-anchor="end" font-family="Barlow Semi Condensed, sans-serif" font-size="11" fill="#E8E4E1" opacity="0.4">hendry.ai</text>
 </svg>

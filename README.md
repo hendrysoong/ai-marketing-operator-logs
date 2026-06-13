@@ -1,4 +1,4 @@
-# AI Marketing Operator Logs · AI Marketing Systems · Context Engineering
+# AI Marketing Operator Logs · AI Marketing Engineering · Context Engineering · AI Marketing Systems
 
 ![AI Marketing Operator Logs Timeline](assets/hero.svg)
 
@@ -12,7 +12,7 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 115+ curated iterations across 7 engines, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 115+ curated iterations across 7 production engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
@@ -31,6 +31,8 @@ The system uses context engineering as its core discipline: designing the inform
 | Create-Social | LinkedIn carousel generation | Production (v1.0.2) |
 | Create-Articles-Replicate | Portable content engine tested on 3 brands | Production |
 | Listen-Competitors-Replicate | Portable competitive intel for other brands | Validated |
+
+Three more engines are planned (working titles): **Listen-Account**, **Signal-Account**, and **Data-Engine**. They appear as dashed tracks in the timeline above and have no log entries yet.
 
 ---
 
