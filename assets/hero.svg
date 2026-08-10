@@ -37,9 +37,9 @@
 <text x="1040" y="70" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="600" fill="#D4633A">Create-Articles</text>
 <text x="1040" y="90" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">46 entries</text>
 <text x="775" y="226" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="600" fill="#4A8CC7">Listen-Competitors</text>
-<text x="775" y="246" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">9 entries</text>
+<text x="775" y="246" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">10 entries</text>
 <text x="1020" y="316" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="600" fill="#3EB88E">Replicate</text>
-<text x="1020" y="336" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">9 entries</text>
+<text x="1020" y="336" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">10 entries</text>
 <text x="1055" y="182" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="600" fill="#7F77DD">Create-Images</text>
 <text x="1055" y="202" font-family="Barlow, sans-serif" font-size="14" fill="#E8E4E1" opacity="0.5">13 entries</text>
 <text x="950" y="434" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="600" fill="#D4BD5A">Create-Compiler</text>
@@ -62,6 +62,6 @@
 <text x="420" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">ITERATION</text>
 <text x="700" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">VALIDATION</text>
 <text x="980" y="680" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="18" font-weight="500" fill="#E8E4E1" opacity="0.5">PRODUCTION</text>
-<text x="600" y="755" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="500" fill="#E8E4E1" opacity="0.4">115+ CURATED ITERATIONS ACROSS 10 ENGINES (3 PLANNED)</text>
+<text x="600" y="755" text-anchor="middle" font-family="Barlow Semi Condensed, sans-serif" font-size="20" font-weight="500" fill="#E8E4E1" opacity="0.4">116 CURATED ITERATIONS ACROSS 10 ENGINES (3 PLANNED)</text>
 <text x="1185" y="775" text-anchor="end" font-family="Barlow Semi Condensed, sans-serif" font-size="11" fill="#E8E4E1" opacity="0.4">hendry.ai</text>
 </svg>

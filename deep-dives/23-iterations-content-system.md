@@ -1,6 +1,6 @@
 # 23 Iterations in 32 Days: How I Built a Production AI Content System
 
-> **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/23-iterations-content-system/
+> **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/build-production-ai-content-system/
 > **Engine:** Create-Articles
 > **Version Range:** v3.8 → v6.8
 > **Author:** Hendry Soong
@@ -9,7 +9,7 @@
 
 **TLDR:** Building a production AI content system took 23 versions over 32 days. Now at Gen 3 stable (v7.9.11). The biggest lessons: one example beats 89 lines of instructions, LLMs lie about validation results, and [context engineering](https://www.hendry.ai/ai-marketing-framework/definitions/context-engineering/) matters more than prompt engineering. The system works because it failed 22 times first.
 
-**Operator Log:** [Create-Articles v1.0 to v7.9.11](https://www.hendry.ai/ai-marketing-framework/operator-logs/#create-articles) · Retrospective
+**Operator Log:** [Create-Articles v1.0 to v7.9.11](https://www.hendry.ai/ai-marketing/operator-logs/#create-articles) · Retrospective
 
 The system works because it failed 22 times first.
 
@@ -242,7 +242,7 @@ The 23 iterations weren't a sign of poor planning. They were the methodology. Yo
 - [Could AI Replace Marketing Teams?](https://www.hendry.ai/could-ai-replace-marketing-teams/)
 - [AI Marketing Framework](https://www.hendry.ai/ai-marketing-framework/)
 - [Context Engineering Definition](https://www.hendry.ai/ai-marketing-framework/definitions/context-engineering/)
-- [AI Marketing Operator Logs](https://www.hendry.ai/ai-marketing-framework/operator-logs/)
+- [AI Marketing Operator Logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
 ## FAQ
 
@@ -274,7 +274,7 @@ LLMs pattern-match validation instructions to expected outputs. Asked to verify 
 
 Context engineering is the discipline of designing what information an AI system sees before generating output. The Gen 3 split architecture applies this principle by giving each engine only the context it needs. Create-Articles sees voice rules and validation. Create-Images sees SVG templates. No context competition between unrelated concerns.
 
-Built by [AI Marketing Operator](https://www.hendry.ai/ai-marketing-framework/operator-logs/) · Create Articles v7.9.11 · Create Images v2.0.9
+Built by [AI Marketing Operator](https://www.hendry.ai/ai-marketing/operator-logs/) · Create Articles v7.9.11 · Create Images v2.0.9
 
 ---
 

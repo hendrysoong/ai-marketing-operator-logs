@@ -1,6 +1,6 @@
 # LLMs Lie About Validation: How I Rebuilt Content Quality Checks
 
-> **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/llm-validation-hallucination/
+> **Canonical URL:** https://www.hendry.ai/ai-marketing/operator-logs/llms-lie-about-validation/
 > **Engine:** Create-Articles
 > **Version Range:** v7.0 → v7.9
 > **Author:** Hendry Soong
@@ -13,7 +13,7 @@
 
 **TLDR:** LLMs pattern-match validation instructions to expected outputs without doing the actual work. Every "PASS" was suspect. The fix: force evidence instead of conclusions. Ask "show me what you found" instead of "did this pass." A 3-tier system (deterministic, evidence-based, advisory) replaced a validation process that was letting banned words, missing links, and schema mismatches through to production.
 
-**Operator Log:** [Create-Articles v7.9.13](https://www.hendry.ai/ai-marketing-framework/operator-logs/#create-articles) · Failure Postmortem
+**Operator Log:** [Create-Articles v7.9.13](https://www.hendry.ai/ai-marketing/operator-logs/#create-articles) · Failure Postmortem
 
 I asked Claude to validate my article had 10+ external links.
 
@@ -220,7 +220,7 @@ The 3-tier system uncovered failures beyond the original validation lies:
 - [23 Iterations: Building the Content System](https://www.hendry.ai/ai-content-system-iteration/)
 - [The AI Marketing Framework](https://www.hendry.ai/ai-marketing-framework/)
 - [Context Engineering Definition](https://www.hendry.ai/ai-marketing-framework/definitions/context-engineering/)
-- [AI Marketing Operator Logs](https://www.hendry.ai/ai-marketing-framework/operator-logs/)
+- [AI Marketing Operator Logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
 ## FAQ
 
