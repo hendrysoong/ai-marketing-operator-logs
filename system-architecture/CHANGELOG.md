@@ -7,6 +7,62 @@ Cross-engine architecture decisions, audits, and workflow formalisation.
 
 ---
 
+## Context Connector: Install Once, Always Latest
+
+**Date:** 5 June 2026
+**Type:** Architecture
+**Generation:** SYSTEM
+
+I built a vendor-neutral context connector over MCP and shipped it to production in a day. It serves my curated context, voice rules and design rules, to any LLM through two tools: search and fetch. A team installs one URL. The content updates server-side, so nobody works from a stale copy. The usual smoke test was blocked in my harness, so I verified the protocol with in-process transport tests instead. That became permanent regression coverage, not a throwaway check. It works in Claude Code, Claude Desktop, ChatGPT, and Copilot Studio.
+
+**Principle:** Serve context live from one source. Bundle it into a skill or hand out a file, and it starts drifting the moment it leaves your hands.
+
+**Tags:** System, Architecture, MCP, Context
+
+---
+
+## One Pattern, Four Surfaces
+
+**Date:** 15 April to 6 June 2026
+**Type:** Architecture
+**Generation:** SYSTEM
+
+The same architecture keeps showing up in my work. A connector that serves context a team reads but cannot edit. A self-serve editor where sales changes the copy on a brand-exact base but cannot touch the layout. A generator that injects verified facts so the model writes only the framing. One context source that many tools read. In each one, a few people author a controlled foundation and many people consume a safe surface. They get the leverage. They cannot corrupt the canon.
+
+**Principle:** Do not hand out editable copies. Hand out a safe surface over one controlled foundation. Few authors, many consumers is the right shape for anything that has to stay consistent at scale.
+
+**Tags:** System, Architecture, Pattern, Governance
+
+---
+
+## Hardening the Agent Workspace: Downloads to Dev
+
+**Date:** 31 May 2026
+**Type:** Learning
+**Generation:** SYSTEM
+
+I moved 19 agent projects off a cloud-synced Downloads folder onto a dedicated dev workspace, one project per folder, each git-baselined. Downloads is an injection-prone, auto-syncing inbox, the wrong substrate for agents that read and write files. While hardening it I found something I had assumed away: the command sandbox and the file-tool permissions are separate layers. A file tool could still write into the SSH key directory even though the bash sandbox blocked it. I only found it by running the write that should have failed. I closed the gap with a permissions wall and a pre-tool hook, then re-ran the probe to confirm.
+
+**Principle:** A configured guard is not an enforced one. The only proof a boundary holds is running the operation it should block.
+
+**Tags:** System, Security, Learning
+
+---
+
+## Machine-Readable Positioning: 7 to 37 Topics
+
+**Date:** 25 April 2026
+**Type:** Feature
+**Generation:** SYSTEM
+
+I expanded the surfaces AI systems actually read, so they parse my positioning directly. The llms.txt key topics went from 7 to 37. Person.knowsAbout went from 14 to 37. I added Organization and WebSite schema, plus DefinedTerm entities for the concepts I want cited. AI-native describes how I work, agent-first and grounded by construction. My title stays AI Marketing Operator and Leader.
+
+**Principle:** If you want AI systems to cite you for a topic, declare it in the surfaces they read. Treat llms.txt and schema as positioning, not plumbing.
+
+**Tags:** System, Feature, Schema, AI-SEO
+
+---
+
 ## Agent Website Building: Three Sites on Neon + Payload + Vercel
 
 **Date:** 18 March to 14 April 2026

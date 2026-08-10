@@ -7,6 +7,20 @@ Portability testing of AI marketing engines across multiple brands. Proved the a
 
 ---
 
+## Portable Doctrine: A Second Engine in One Session
+
+**Date:** 23 to 24 April 2026
+**Type:** Learning
+**Generation:** REPLICATE
+
+I ported the core of my content system into a separate production engine in a single session. The slot-based JSON, the assembler, the named voice anti-patterns, the visual-boundary and context-absorption gates all moved across. I dropped the CMS-specific layers, the rich-text AST and the publishing contract, because the new engine ships shell-wrapped HTML instead. The doctrine moved across. The plumbing stayed behind.
+
+**Principle:** A well-built content system separates a portable doctrine from a brand and CMS-specific layer. The doctrine is the asset. The plumbing is replaceable.
+
+**Tags:** Replicate, Create-Articles-Replicate, Portability
+
+---
+
 ## Brand A v2.16 — Agents Interpret "Copy" as "Recreate Similar"
 
 **Date:** January 2026

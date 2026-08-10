@@ -12,11 +12,11 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 115+ curated iterations across 7 production engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 116 curated iterations across 7 engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
-> **Note:** The website curates entries for readability (116 entries). This repo preserves a more granular breakdown (104 changelog entries + 6 deep dives); the latest batch (6 entries + a 7th deep dive) is mirrored to the live site first and lands here on the next content-mirror pass.
+> **Note:** The website curates entries for readability (116 entries). This repo preserves a more granular breakdown: 110 changelog entries + 7 deep dives = 117. Six of the seven changelog tracks now mirror the site exactly. Create-Articles is the deliberate exception — 47 entries here against 46 on the site, sharing 40 titles: this repo splits some releases into finer version rows, and six site entries have not been back-filled here.
 
 ---
 
@@ -24,11 +24,11 @@ The system uses context engineering as its core discipline: designing the inform
 
 | Engine | Purpose | Status |
 |---|---|---|
-| Create-Articles | Content generation with 3-tier validation | Production (v8.0.1) |
-| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | Production (v4.1.0) |
-| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | Production (v2.0.1) |
-| Listen-Competitors | Competitive intelligence with synthesis | Production (v3.3) |
-| Create-Social | LinkedIn carousel generation | Production (v1.0.2) |
+| Create-Articles | Content generation with 3-tier validation | Stable (v8.3.0) |
+| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | Stable (v4.8.0) |
+| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | Retired — `tools/validate` is authoritative (v2.0.1) |
+| Listen-Competitors | Competitive intelligence with synthesis | Dormant — no outputs since February 2026 (v3.3) |
+| Create-Social | LinkedIn carousel generation | Dormant — spec frozen March 2026 (v1.0.2) |
 | Create-Articles-Replicate | Portable content engine tested on 3 brands | Production |
 | Listen-Competitors-Replicate | Portable competitive intel for other brands | Validated |
 
@@ -55,7 +55,7 @@ ai-marketing-operator-logs/
 ├── assets/
 │   └── hero.svg                      Timeline visualization from blog
 ├── system-architecture/
-│   └── CHANGELOG.md                  19 entries
+│   └── CHANGELOG.md                  23 entries
 ├── create-articles/
 │   └── CHANGELOG.md                  47 entries incl. foundation v0.1–v0.3
 ├── create-images/
@@ -65,10 +65,11 @@ ai-marketing-operator-logs/
 ├── create-social/
 │   └── CHANGELOG.md                  1 entry
 ├── listen-competitors/
-│   └── CHANGELOG.md                  9 entries
+│   └── CHANGELOG.md                  10 entries
 ├── replicate/
-│   └── CHANGELOG.md                  9 entries
+│   └── CHANGELOG.md                  10 entries
 └── deep-dives/
+    ├── build-log-001-content-system.md
     ├── content-infrastructure.md
     ├── engine-split-context-window-tokens.md
     ├── llm-validation-hallucination.md
@@ -81,7 +82,7 @@ ai-marketing-operator-logs/
 
 ## How to Read This
 
-Entries are reverse chronological (newest first). Each includes the trigger, solution, and extracted principle. Updated bi-weekly as development continues.
+Entries are reverse chronological (newest first). Each includes the trigger, solution, and extracted principle. Updated as development continues.
 
 Log entries cover seven sections: System Architecture, Create-Articles, Create-Images, Create-Compiler, Create-Social, Listen-Competitors, and Replicate. Each section has its own CHANGELOG.md.
 
@@ -93,7 +94,8 @@ Full retrospectives on major learnings. Each deep dive expands on log entries wi
 
 | Article | Engine | Link |
 |---|---|---|
-| Why Your AI Marketing System Should Be Model-Agnostic | Cross-Engine | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/model-agnostic/) \| [Repo](deep-dives/model-agnostic.md) |
+| Build Log #1: Content System | Cross-Engine | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/build-log-001-content-system/) \| [Repo](deep-dives/build-log-001-content-system.md) |
+| Why Your AI Marketing System Should Be Model-Agnostic | Cross-Engine | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/model-agnostic-ai-marketing/) \| [Repo](deep-dives/model-agnostic.md) |
 | The Missing Layer Between Your AI Systems and Your Website | Create-Articles | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/content-infrastructure/) \| [Repo](deep-dives/content-infrastructure.md) |
 | The Engine Split: Context Window Survival at 84K Tokens | Create-Articles + Create-Images | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/engine-split-context-window-tokens/) \| [Repo](deep-dives/engine-split-context-window-tokens.md) |
 | LLMs Lie About Validation: How I Rebuilt Content Quality Checks | Create-Articles | [Read on hendry.ai](https://www.hendry.ai/ai-marketing/operator-logs/llms-lie-about-validation/) \| [Repo](deep-dives/llm-validation-hallucination.md) |

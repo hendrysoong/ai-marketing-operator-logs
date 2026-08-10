@@ -1,7 +1,7 @@
 # Why Your AI Marketing System Should Be Model-Agnostic
 
 > Part of the [AI Marketing Operator Logs](../README.md) by [Hendry Soong](https://www.hendry.ai)
-> Read the full article: [hendry.ai/ai-marketing/operator-logs/model-agnostic](https://www.hendry.ai/ai-marketing/operator-logs/model-agnostic/)
+> Read the full article: [hendry.ai/ai-marketing/operator-logs/model-agnostic-ai-marketing](https://www.hendry.ai/ai-marketing/operator-logs/model-agnostic-ai-marketing/)
 
 ---
 

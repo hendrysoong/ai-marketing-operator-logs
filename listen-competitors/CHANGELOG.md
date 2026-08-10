@@ -7,6 +7,20 @@ Competitive intelligence engine with 6-phase workflow and two-layer synthesis ou
 
 ---
 
+## Two-Stage Review: The 17-Point Error I Almost Shipped
+
+**Date:** 1 to 2 May 2026
+**Type:** Learning
+**Generation:** GEN 3
+
+A subagent produced a confident metric for a prospect dashboard. A second agent, fresh, checked it against the spec and then the data. The regex behind the number had matched substrings inside unrelated words. It overcounted by 17 points. A second pass caught a recognition stat stated three times when the source said four. Both would have been live in front of a reader. Single-pass self-review missed both.
+
+**Principle:** Single-pass self-review ships confident errors. A fresh second agent, checking against the spec and then the data, is where defects surface. Collection is not synthesis.
+
+**Tags:** Listen-Competitors, Validation
+
+---
+
 ## v3.3 — Two-Layer Output
 
 **Date:** January 2026
