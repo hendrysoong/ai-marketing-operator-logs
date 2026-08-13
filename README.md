@@ -1,6 +1,30 @@
 # AI Marketing Operator Logs · AI Marketing Engineering · Context Engineering · AI Marketing Systems
 
-![AI Marketing Operator Logs Timeline](assets/hero.svg)
+```
+❯ hendry capability status --all
+governed Context loaded — voice · ICP · messaging · rules
+
+GROUP            CAPABILITY                    STATUS   ENTRIES
+───────────────────────────────────────────────────────────────
+System           deep dives                    active         8
+Create           create-articles               active        75
+Create           create-compiler               active         6
+Create           create-images                 active        26
+Create           create-social                 active         1
+System           data verification             active        70
+System           data measurement              active        58
+System           data pipelines and sources    active        71
+System           governance                    active        56
+System           gtm measurement               active        55
+System           gtm verification and sources  active        69
+Listen           listen-competitors            beta          12
+System           orchestrate                   active        83
+Replicate proof  create portability proof      active        10
+System           signal                        active        48
+System           system architecture           active        81
+───────────────────────────────────────────────────────────────
+16 capabilities · 729 entries · 15 active · 1 beta
+```
 
 Raw documentation of AI Marketing Engineering by Hendry Soong.
 
@@ -52,8 +76,6 @@ ai-marketing-operator-logs/
 ├── SYSTEM-STATUS.md                  Current engine versions, live reference
 ├── .ai/
 │   └── CLAUDE.md                     Agent routing — shows orchestration pattern
-├── assets/
-│   └── hero.svg                      Timeline visualization from blog
 ├── create-articles/
 │   └── CHANGELOG.md                  75 entries
 ├── create-compiler/
