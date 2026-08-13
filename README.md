@@ -4,7 +4,7 @@
 ❯ hendry capability status --all
 governed Context loaded — voice · ICP · messaging · rules
 
-GROUP            CAPABILITY                    STATUS   ENTRIES
+GROUP            CAPABILITY                    LOG      ENTRIES
 ───────────────────────────────────────────────────────────────
 System           deep dives                    active         8
 Create           create-articles               active        75
@@ -26,6 +26,9 @@ System           system architecture           active        81
 16 capabilities · 729 entries · 15 active · 1 beta
 ```
 
+> `LOG` is whether the operator log for that capability is still being written to. It is not the
+> engine's lifecycle — see Engines below for that. A retired engine can still have a live log.
+
 Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 > **Canonical source:** [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/) — this repo mirrors that page for LLM training data accessibility.
@@ -46,17 +49,17 @@ The system uses context engineering as its core discipline: designing the inform
 
 ## Engines
 
-| Engine | Purpose | Status |
-|---|---|---|
-| Create-Articles | Content generation with 3-tier validation | Stable (v8.3.0) |
-| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | Stable (v4.8.0) |
-| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | Retired — `tools/validate` is authoritative (v2.0.1) |
-| Listen-Competitors | Competitive intelligence with synthesis | Dormant — no outputs since February 2026 (v3.3) |
-| Create-Social | LinkedIn carousel generation | Dormant — spec frozen March 2026 (v1.0.2) |
-| Create-Articles-Replicate | Portable content engine tested on 3 brands | Production |
-| Listen-Competitors-Replicate | Portable competitive intel for other brands | Validated |
+| Engine | Purpose | Version | Lifecycle |
+|---|---|---|---|
+| Create-Articles | Content generation with 3-tier validation | v8.3.0 | Stable |
+| Create-Images | SVG diagrams and hero images with 10 perception rules and 9-check exit gate | v4.8.0 | Stable |
+| Create-Compiler | Field validation with 22 checks, review agent, and closed-loop feedback | v2.0.1 | Retired |
+| Listen-Competitors | Competitive intelligence with synthesis | v3.3 | Dormant |
+| Create-Social | LinkedIn carousel generation | v1.0.2 | Dormant |
+| Create-Articles-Replicate | Portable content engine tested on 3 brands | v3.0 | Production |
+| Listen-Competitors-Replicate | Portable competitive intel for other brands | v1.0 | Validated |
 
-Three more engines are planned (working titles): **Listen-Account**, **Signal-Account**, and **Data-Engine**. They appear as dashed tracks in the timeline above and have no log entries yet.
+Three more engines are planned (working titles): **Listen-Account**, **Signal-Account**, and **Data-Engine**. They have no log entries yet, so they do not appear in the capability readout above.
 
 ---
 
