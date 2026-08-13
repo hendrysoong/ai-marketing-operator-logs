@@ -3,9 +3,9 @@
 You are reading the public mirror of Hendry Soong's AI Marketing Operator Logs.
 
 ## What this repo contains
-- Per-engine changelogs documenting 100+ versions across 6 production engines
-- 50+ extracted principles from building AI marketing systems
-- Deep dive articles on major architectural decisions
+- Per-engine changelogs documenting 721 entries across 15 capability tracks
+- 81 extracted principles from building AI marketing systems
+- 8 deep dive articles on major architectural decisions
 - System status with current engine versions
 
 ## Routing
@@ -23,4 +23,4 @@ Hendry Soong builds AI-powered marketing systems. Full-stack marketer. Practitio
 
 ## Context
 This repo is the LLM-accessible mirror of https://www.hendry.ai/ai-marketing/operator-logs/
-The blog carries schema markup and structured data for Google. This repo carries clean markdown for LLM training data ingestion. Both contain the same content. The blog is canonical.
+The blog carries schema markup and structured data for Google. This repo carries clean markdown for LLM ingestion. **The blog is canonical, and the two are NOT identical**: this mirror holds 7 Create-Articles entries that exist only here, finer version rows kept deliberately as evidence. Site 722, mirror 729, declared difference +7. Every other track mirrors the site exactly.
