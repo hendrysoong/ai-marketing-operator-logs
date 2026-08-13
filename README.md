@@ -12,11 +12,11 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 728 records — 721 changelog entries plus 7 deep dives — across 15 tracks and 7 named engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 729 records — 721 changelog entries plus 8 deep dives — across 15 tracks and 7 named engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
-> **Note on the two totals, because they are not the same number.** The site publishes **721**: 714 changelog entries plus 7 deep dives. This repo holds **728**: the same 714 entries, plus 7 that exist only here, plus the same 7 deep dives. The 7 are the deliberate Create-Articles curation — this repo splits some releases into finer version rows, and they are kept because they are real evidence rather than rounding. Note that the changelog count alone lands on 721, which equals the site's headline by coincidence (714 + 7) and not by parity. Every other track mirrors the site exactly.
+> **Note on the two totals, because they are not the same number.** The site publishes **722**: 714 changelog entries plus 8 deep dives. This repo holds **729**: the same 714 entries, plus 7 that exist only here, plus the same 8 deep dives. The 7 are the deliberate Create-Articles curation — this repo splits some releases into finer version rows, and they are kept because they are real evidence rather than rounding. Note that the changelog count alone lands on 721, which equals the site's headline by coincidence (714 + 7) and not by parity. Every other track mirrors the site exactly.
 
 ---
 
@@ -87,6 +87,7 @@ ai-marketing-operator-logs/
 └── deep-dives/
     ├── 23-iterations-content-system.md
     ├── build-log-001-content-system.md
+    ├── build-log-002-framework-reconciliation.md
     ├── content-infrastructure.md
     ├── engine-split-context-window-tokens.md
     ├── gen1-video-walkthrough.md
