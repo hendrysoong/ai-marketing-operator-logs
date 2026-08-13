@@ -3,7 +3,7 @@
 > Part of the [AI Marketing Operator Logs](README.md) by [Hendry Soong](https://www.hendry.ai)
 > Canonical source: [hendry.ai/ai-marketing/operator-logs](https://www.hendry.ai/ai-marketing/operator-logs/)
 
-Patterns that keep showing up. Extracted from the 728 records in this repo, across all engines. This table holds the 81 that recur; it is a curated set, not one row per entry.
+Patterns that keep showing up. Extracted from the 729 records in this repo, across all engines. This table holds the 81 that recur; it is a curated set, not one row per entry.
 
 ---
 
