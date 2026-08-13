@@ -25,5 +25,5 @@ spec froze in March 2026.
 
 - **Orchestration:** GitHub-based with CLAUDE.md routing
 - **Pipeline:** Create-Articles → Create-Images → validation → Headless CMS (Neon + Payload + Vercel)
-- **Total curated iterations:** 116 operator log entries across 7 engines; 3 more planned
+- **Total curated iterations:** 728 — 721 changelog entries plus 7 deep dives, across 15 tracks. Of the 714 that mirror the site, 123 are attributed to the 7 named engines and 591 to cross-engine system work; 7 exist only here (declared Create-Articles curation); 3 engines planned
 - **Extracted principles:** 81

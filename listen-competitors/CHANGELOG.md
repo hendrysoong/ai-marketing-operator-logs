@@ -21,6 +21,34 @@ A subagent produced a confident metric for a prospect dashboard. A second agent,
 
 ---
 
+## Zero Setup, Any Target, One ZIP
+
+**Date:** 25 January 2026
+**Type:** Architecture
+**Generation:** GEN 3
+
+Version 3.0 of the competitor-listening engine dropped setup entirely. Point it at any target and run. Deployment is a ZIP, so there is no install step and no config file to fill in first. The path there was LP-04: build the specific version, learn what the workflow needs, then generalise. The pre-defined-target build from v2.0 was the specific version.
+
+**Principle:** Build the specific version first, then generalise once you know what it needs.
+
+**Tags:** Gen 3, Listen-Competitors, Architecture
+
+---
+
+## A Config of Pre-Defined Targets, Abandoned the Same Day
+
+**Date:** 25 January 2026
+**Type:** Decision
+**Generation:** GEN 3
+
+v2.0 shipped a config-driven build with pre-defined research targets, and it was deprioritised the same day v3.0 landed. The generic zero-setup workflow covered every target the config file listed, so maintaining the list bought nothing. The v2.0 work still paid. Writing out the specific targets showed which parts of the workflow were general. It stays in the changelog as an abandoned branch.
+
+**Principle:** Record the abandoned version. It explains why the surviving one has that shape.
+
+**Tags:** Gen 3, Listen-Competitors, Decision
+
+---
+
 ## v3.3 — Two-Layer Output
 
 **Date:** January 2026

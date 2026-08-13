@@ -12,11 +12,11 @@ Raw documentation of AI Marketing Engineering by Hendry Soong.
 
 These logs capture the real work of operating the AI Marketing Framework. Not polished thought leadership. Timestamped entries showing iterations, failures, and extracted principles from running production systems.
 
-What I changed, what broke, what I learned. 116 curated iterations across 7 engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
+What I changed, what broke, what I learned. 728 records — 721 changelog entries plus 7 deep dives — across 15 tracks and 7 named engines, with 3 more planned, built over 3 generations. The Foundation entries (v0.1 to v0.3) show context engineering in action: designing the brand voice, ICP, and positioning that shape every AI output. Everything after that is iteration, failure, and extracted principles.
 
 The system uses context engineering as its core discipline: designing the information layer that all AI engines share, so outputs stay consistent across articles, images, competitive intelligence, and social content.
 
-> **Note:** The website curates entries for readability (116 entries). This repo preserves a more granular breakdown: 110 changelog entries + 7 deep dives = 117. Six of the seven changelog tracks now mirror the site exactly. Create-Articles is the deliberate exception — 47 entries here against 46 on the site, sharing 40 titles: this repo splits some releases into finer version rows, and six site entries have not been back-filled here.
+> **Note on the two totals, because they are not the same number.** The site publishes **721**: 714 changelog entries plus 7 deep dives. This repo holds **728**: the same 714 entries, plus 7 that exist only here, plus the same 7 deep dives. The 7 are the deliberate Create-Articles curation — this repo splits some releases into finer version rows, and they are kept because they are real evidence rather than rounding. Note that the changelog count alone lands on 721, which equals the site's headline by coincidence (714 + 7) and not by parity. Every other track mirrors the site exactly.
 
 ---
 
@@ -54,28 +54,44 @@ ai-marketing-operator-logs/
 │   └── CLAUDE.md                     Agent routing — shows orchestration pattern
 ├── assets/
 │   └── hero.svg                      Timeline visualization from blog
-├── system-architecture/
-│   └── CHANGELOG.md                  23 entries
 ├── create-articles/
-│   └── CHANGELOG.md                  47 entries incl. foundation v0.1–v0.3
-├── create-images/
-│   └── CHANGELOG.md                  13 entries
+│   └── CHANGELOG.md                  75 entries
 ├── create-compiler/
 │   └── CHANGELOG.md                  6 entries
+├── create-images/
+│   └── CHANGELOG.md                  26 entries
 ├── create-social/
 │   └── CHANGELOG.md                  1 entry
+├── data/
+│   └── CHANGELOG.md                  70 entries
+├── data-measurement/
+│   └── CHANGELOG.md                  58 entries
+├── data-pipelines/
+│   └── CHANGELOG.md                  71 entries
+├── governance-log/
+│   └── CHANGELOG.md                  56 entries
+├── gtm/
+│   └── CHANGELOG.md                  55 entries
+├── gtm-verification/
+│   └── CHANGELOG.md                  69 entries
 ├── listen-competitors/
-│   └── CHANGELOG.md                  10 entries
+│   └── CHANGELOG.md                  12 entries
+├── orchestrate/
+│   └── CHANGELOG.md                  83 entries
 ├── replicate/
 │   └── CHANGELOG.md                  10 entries
+├── signal/
+│   └── CHANGELOG.md                  48 entries
+├── system-architecture/
+│   └── CHANGELOG.md                  81 entries
 └── deep-dives/
+    ├── 23-iterations-content-system.md
     ├── build-log-001-content-system.md
     ├── content-infrastructure.md
     ├── engine-split-context-window-tokens.md
+    ├── gen1-video-walkthrough.md
     ├── llm-validation-hallucination.md
-    ├── 23-iterations-content-system.md
-    ├── model-agnostic.md
-    └── gen1-video-walkthrough.md
+    └── model-agnostic.md
 ```
 
 ---
@@ -84,7 +100,7 @@ ai-marketing-operator-logs/
 
 Entries are reverse chronological (newest first). Each includes the trigger, solution, and extracted principle. Updated as development continues.
 
-Log entries cover seven sections: System Architecture, Create-Articles, Create-Images, Create-Compiler, Create-Social, Listen-Competitors, and Replicate. Each section has its own CHANGELOG.md.
+Log entries cover 15 tracks: create-articles, create-compiler, create-images, create-social, data, data-measurement, data-pipelines, governance-log, gtm, gtm-verification, listen-competitors, orchestrate, replicate, signal, system-architecture. Each has its own CHANGELOG.md.
 
 ---
 
